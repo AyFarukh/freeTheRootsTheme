@@ -1,0 +1,78 @@
+{
+  "sections": {
+    "main": {
+      "type": "main-contact",
+      "disabled": true,
+      "settings": {
+        "show_title": true,
+        "content_layout": "left"
+      }
+    },
+    "a43318bf-8aa1-42e6-a7b6-51b0921854b8": {
+      "type": "custom_contact_form",
+      "blocks": {
+        "template--15199161679933__a43318bf-8aa1-42e6-a7b6-51b0921854b8-1684289382f15865cf-0": {
+          "type": "heading",
+          "settings": {
+            "title": "Support Inquiry Form"
+          }
+        },
+        "template--15199161679933__a43318bf-8aa1-42e6-a7b6-51b0921854b8-1684289382f15865cf-1": {
+          "type": "text",
+          "settings": {
+            "title": "Name",
+            "required": false
+          }
+        },
+        "template--15199161679933__a43318bf-8aa1-42e6-a7b6-51b0921854b8-1684289382f15865cf-2": {
+          "type": "email",
+          "settings": {
+            "title": "Email",
+            "required": true
+          }
+        },
+        "bcd10f33-9e09-4ce0-92d1-5e2152593067": {
+          "type": "text",
+          "settings": {
+            "title": "Order Number (or tracking #)",
+            "required": true
+          }
+        },
+        "d1edc041-b680-47cc-a7b7-c0067be29515": {
+          "type": "radio",
+          "settings": {
+            "title": "What issue can we help solve?",
+            "required": true,
+            "label-one": "Haven't received my package",
+            "label-two": "An item was missing from my order",
+            "label-three": "I have damaged items in my package",
+            "label-four": "Subscription help",
+            "label-five": "Other",
+            "label-six": ""
+          }
+        },
+        "template--15199161679933__a43318bf-8aa1-42e6-a7b6-51b0921854b8-1684289382f15865cf-3": {
+          "type": "body",
+          "settings": {
+            "title": "Explain the issue in further detail (optional)",
+            "required": false
+          }
+        }
+      },
+      "block_order": [
+        "template--15199161679933__a43318bf-8aa1-42e6-a7b6-51b0921854b8-1684289382f15865cf-0",
+        "template--15199161679933__a43318bf-8aa1-42e6-a7b6-51b0921854b8-1684289382f15865cf-1",
+        "template--15199161679933__a43318bf-8aa1-42e6-a7b6-51b0921854b8-1684289382f15865cf-2",
+        "bcd10f33-9e09-4ce0-92d1-5e2152593067",
+        "d1edc041-b680-47cc-a7b7-c0067be29515",
+        "template--15199161679933__a43318bf-8aa1-42e6-a7b6-51b0921854b8-1684289382f15865cf-3"
+      ],
+      "settings": {
+      }
+    }
+  },
+  "order": [
+    "main",
+    "a43318bf-8aa1-42e6-a7b6-51b0921854b8"
+  ]
+}

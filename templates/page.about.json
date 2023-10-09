@@ -1,0 +1,211 @@
+{
+  "sections": {
+    "main": {
+      "type": "main-page",
+      "custom_css": [
+        "h1 {margin: 50px 0; text-align: center;}"
+      ],
+      "settings": {
+      }
+    },
+    "e7938216-41cf-45ad-99c5-22c42b08a45a": {
+      "type": "custom-img-with-txt",
+      "settings": {
+        "custom_class": "paddingV textWithImageSection",
+        "image": "shopify:\/\/shop_images\/IMG_7134_4.jpg",
+        "image_link": "",
+        "subheading": "We're a family",
+        "title": "Our Story",
+        "title_size": 40,
+        "heading_h1": false,
+        "text": "<p><strong>Who are we?<\/strong><\/p><p>We are brothers, Nicholas and Joshua Thompson, and we were raised in Orlando, Florida. Our family is Jamaican, specifically from Ocho Rios, and many of them migrated to the US 40 years ago to build a better life.<\/p><p>They did just that and reinforced the importance of family, which should always grow together. We grew up with faith and determination in our hearts to uplift the people around us, but never thought it would come through one big decision...<\/p>",
+        "enlarge_text": false,
+        "button1_label": "",
+        "button1_link": "",
+        "button2_label": "",
+        "button2_link": "",
+        "button_style": "primary",
+        "text_alignment": "center left",
+        "full_width": true,
+        "mobile_overlay_under": false,
+        "image_overlay_style": "standard"
+      }
+    },
+    "0e4cdef1-b025-4b8c-ad46-1bf7e302dfb9": {
+      "type": "image-with-text-overlay",
+      "disabled": true,
+      "settings": {
+        "custom_class": "textWithImageSection",
+        "image": "shopify:\/\/shop_images\/IMG_7134_4.jpg",
+        "image_link": "",
+        "height": "fixed",
+        "height_desktop": 650,
+        "height_mobile": 600,
+        "subheading": "We're a family",
+        "title": "Our Story",
+        "title_size": 40,
+        "heading_h1": false,
+        "text": "<p><strong>Who are we?<\/strong><\/p><p>We are brothers, Nicholas and Joshua Thompson, and we were raised in Orlando, Florida. Our family is Jamaican, specifically from Ocho Rios, and many of them migrated to the US 40 years ago to build a better life.<\/p><p>They did just that and reinforced the importance of family, which should always grow together. We grew up with faith and determination in our hearts to uplift the people around us, but never thought it would come through one big decision...<\/p>",
+        "enlarge_text": true,
+        "button1_label": "",
+        "button1_link": "",
+        "button2_label": "",
+        "button2_link": "",
+        "button_style": "primary",
+        "text_alignment": "center left",
+        "full_width": true,
+        "mobile_overlay_under": false,
+        "image_overlay_style": "standard"
+      }
+    },
+    "70e26888-1298-4252-ac36-f79bf81b4e67": {
+      "type": "rich-text",
+      "settings": {
+        "subheading": "",
+        "title": "The Big Decision",
+        "title_size": 40,
+        "heading_h1": false,
+        "text": "<p>We deeply understand the struggles of going natural. In 2015, we started growing out our freeform locs (and have since started our 2nd loc journey) and immediately received backlash. If you have ever worn your hair naturally, just like us, you've heard the famous questions, “what's that on your head?” and “so...what're you gonna do with that?”<\/p><p>Little did anyone understand, a work of art was slowly being formed on our heads. Whether curly, free-formed, twisted, wavy or straight, natural hair is a masterpiece in the making and we had to wait for ours to take form. As our locs began to grow and mature, we underestimated the importance of natural products, specifically soap. This inspired us to help others through their natural journey!<\/p>",
+        "enlarge_text": false,
+        "button_label": "",
+        "button_link": "",
+        "button_style": "primary",
+        "text_alignment": "center",
+        "full_width": false,
+        "no_padding": false,
+        "color_bg": "",
+        "alternate_bg_color": false
+      }
+    },
+    "51a3e38e-dc58-4abb-89fc-008c01cc64e5": {
+      "type": "custom-img-with-txt",
+      "settings": {
+        "custom_class": "paddingV textWithImageSection",
+        "image": "shopify:\/\/shop_images\/DSC_0830.jpg",
+        "image_link": "",
+        "subheading": "",
+        "title": "The FreeTheRoots Community",
+        "title_size": 40,
+        "heading_h1": false,
+        "text": "<p>We started building the FreeTheRoots community in 2018 not realizing how much it would actually grow. We began assisting multiple individuals in our community by giving them reliable advice on how to take care of their natural hair and skin. We became passionate about helping our community which lead us to become who we are.<\/p>",
+        "enlarge_text": true,
+        "button1_label": "",
+        "button1_link": "",
+        "button2_label": "",
+        "button2_link": "",
+        "button_style": "primary",
+        "text_alignment": "center right",
+        "full_width": true,
+        "mobile_overlay_under": false,
+        "image_overlay_style": "standard"
+      }
+    },
+    "95479524-868c-4bc3-a4f7-449e9c97bdba": {
+      "type": "image-with-text-overlay",
+      "disabled": true,
+      "settings": {
+        "custom_class": "imageWithText1",
+        "image": "shopify:\/\/shop_images\/DSC_0830.jpg",
+        "image_link": "",
+        "height": "fixed",
+        "height_desktop": 650,
+        "height_mobile": 250,
+        "subheading": "",
+        "title": "The FreeTheRoots Community",
+        "title_size": 40,
+        "heading_h1": false,
+        "text": "<p>We started building the FreeTheRoots community in 2018 not realizing how much it would actually grow. We began assisting multiple individuals in our community by giving them reliable advice on how to take care of their natural hair and skin. We became passionate about helping our community which lead us to become who we are.<\/p>",
+        "enlarge_text": true,
+        "button1_label": "",
+        "button1_link": "",
+        "button2_label": "",
+        "button2_link": "",
+        "button_style": "primary",
+        "text_alignment": "center left",
+        "full_width": true,
+        "mobile_overlay_under": false,
+        "image_overlay_style": "standard"
+      }
+    },
+    "4cef597b-d7e8-448a-9ecb-76a17b9349f5": {
+      "type": "rich-text",
+      "settings": {
+        "subheading": "",
+        "title": "The Big Decision",
+        "title_size": 40,
+        "heading_h1": false,
+        "text": "<p>We deeply understand the struggles of going natural. In 2015, we started growing out our freeform locs (and have since started our 2nd loc journey) and immediately received backlash. If you have ever worn your hair naturally, just like us, you've heard the famous questions, “what's that on your head?” and “so...what're you gonna do with that?”<\/p><p>Little did anyone understand, a work of art was slowly being formed on our heads. Whether curly, free-formed, twisted, wavy or straight, natural hair is a masterpiece in the making and we had to wait for ours to take form. As our locs began to grow and mature, we underestimated the importance of natural products, specifically soap. This inspired us to help others through their natural journey!<\/p>",
+        "enlarge_text": true,
+        "button_label": "",
+        "button_link": "",
+        "button_style": "primary",
+        "text_alignment": "center",
+        "full_width": false,
+        "no_padding": false,
+        "color_bg": "",
+        "alternate_bg_color": false
+      }
+    },
+    "c038e6ff-07aa-46fb-b8be-fb14b4702c80": {
+      "type": "custom-img-with-txt",
+      "settings": {
+        "custom_class": "paddingV textWithImageSection",
+        "image": "shopify:\/\/shop_images\/AdobeStock_302439584_1950x_f092dad5-879f-4299-99b7-a5c7e945ed2a.jpg",
+        "image_link": "",
+        "subheading": "",
+        "title": "What's Our Goal?",
+        "title_size": 40,
+        "heading_h1": false,
+        "text": "<p>We firmly believe in community and our primary goal is to spread love to all people. One way we spread love is by giving y’all exactly what you ask for! That’s the reason we added <a href=\"\/collections\/aloe-hydrating-mists\" title=\"Aloe Hydrating Mists\">Aloe Hydrating Mists<\/a> to our product line, with much more to come. <\/p><p>Our community is our top priority and everything we offer will always be for your benefit. If you join our community, we dedicate ourselves to walk alongside you through your natural journey! Join our story and let us be a part of yours. <\/p><p>We also have a growing team! An essential member is Cynthia and you can click <a href=\"https:\/\/www.freetheroots.com\/pages\/about-me-cynthia\">here<\/a> to learn more about her story.<\/p>",
+        "enlarge_text": true,
+        "button1_label": "",
+        "button1_link": "",
+        "button2_label": "",
+        "button2_link": "",
+        "button_style": "primary",
+        "text_alignment": "center left",
+        "full_width": true,
+        "mobile_overlay_under": false,
+        "image_overlay_style": "standard"
+      }
+    },
+    "a597dbcf-f6b8-4573-a137-b630686e50c3": {
+      "type": "image-with-text-overlay",
+      "disabled": true,
+      "settings": {
+        "custom_class": "textWithImageSection3",
+        "image": "shopify:\/\/shop_images\/AdobeStock_302439584.jpg",
+        "image_link": "",
+        "height": "fixed",
+        "height_desktop": 650,
+        "height_mobile": 250,
+        "subheading": "",
+        "title": "What's Our Goal?",
+        "title_size": 40,
+        "heading_h1": false,
+        "text": "<p>We firmly believe in community and our primary goal is to spread love to all people. One way we spread love is by giving y’all exactly what you ask for! That’s the reason we added <a href=\"\/collections\/aloe-hydrating-mists\" title=\"Aloe Hydrating Mists\">Aloe Hydrating Mists<\/a> to our product line, with much more to come. <\/p><p>Our community is our top priority and everything we offer will always be for your benefit. If you join our community, we dedicate ourselves to walk alongside you through your natural journey! Join our story and let us be a part of yours. <\/p><p>We also have a growing team! An essential member is Cynthia and you can click <a href=\"https:\/\/www.freetheroots.com\/pages\/about-me-cynthia\">here<\/a> to learn more about her story.<\/p>",
+        "enlarge_text": true,
+        "button1_label": "",
+        "button1_link": "",
+        "button2_label": "",
+        "button2_link": "",
+        "button_style": "primary",
+        "text_alignment": "center left",
+        "full_width": true,
+        "mobile_overlay_under": false,
+        "image_overlay_style": "standard"
+      }
+    }
+  },
+  "order": [
+    "main",
+    "e7938216-41cf-45ad-99c5-22c42b08a45a",
+    "0e4cdef1-b025-4b8c-ad46-1bf7e302dfb9",
+    "70e26888-1298-4252-ac36-f79bf81b4e67",
+    "51a3e38e-dc58-4abb-89fc-008c01cc64e5",
+    "95479524-868c-4bc3-a4f7-449e9c97bdba",
+    "4cef597b-d7e8-448a-9ecb-76a17b9349f5",
+    "c038e6ff-07aa-46fb-b8be-fb14b4702c80",
+    "a597dbcf-f6b8-4573-a137-b630686e50c3"
+  ]
+}

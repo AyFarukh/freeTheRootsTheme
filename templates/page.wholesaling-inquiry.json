@@ -1,0 +1,123 @@
+{
+  "sections": {
+    "main": {
+      "type": "main-page",
+      "disabled": true,
+      "settings": {
+      }
+    },
+    "1eef23be-54fd-42b6-bd82-8f04bb397a75": {
+      "type": "custom_contact_form",
+      "blocks": {
+        "template--15200024002621__1eef23be-54fd-42b6-bd82-8f04bb397a75-16838729106a258439-0": {
+          "type": "heading",
+          "settings": {
+            "title": "Wholesale Inquiry Form"
+          }
+        },
+        "template--15200024002621__1eef23be-54fd-42b6-bd82-8f04bb397a75-16838729106a258439-1": {
+          "type": "text",
+          "settings": {
+            "title": "First & Last Name",
+            "required": true
+          }
+        },
+        "template--15200024002621__1eef23be-54fd-42b6-bd82-8f04bb397a75-16838729106a258439-2": {
+          "type": "email",
+          "settings": {
+            "title": "Email Address",
+            "required": true
+          }
+        },
+        "d0abe320-b2ad-40a3-b251-98fa6e916f4b": {
+          "type": "telephone",
+          "settings": {
+            "title": "Phone Number (optional)",
+            "required": false
+          }
+        },
+        "ba0347f7-c953-4c13-98fd-06d54c44e596": {
+          "type": "text",
+          "settings": {
+            "title": "Business Name (optional)",
+            "required": false
+          }
+        },
+        "112160f8-06c1-4bbc-908d-6d269062dfcd": {
+          "type": "text",
+          "settings": {
+            "title": "Website (optional)",
+            "required": false
+          }
+        },
+        "1a79d6c4-2579-4bc6-9e49-5fe4dd92a00b": {
+          "type": "radio",
+          "settings": {
+            "title": "Purpose Of Wholesale",
+            "required": true,
+            "label-one": "For my brick and mortar retail store",
+            "label-two": "For my salon",
+            "label-three": "For my online retail store",
+            "label-four": "For an event",
+            "label-five": "None of these",
+            "label-six": ""
+          }
+        },
+        "template--15200024002621__1eef23be-54fd-42b6-bd82-8f04bb397a75-16838729106a258439-3": {
+          "type": "body",
+          "settings": {
+            "title": "Describe what you do (optional)",
+            "required": false
+          }
+        },
+        "f571b1cd-2084-4ffa-badd-c4dfc071f7f5": {
+          "type": "radio",
+          "settings": {
+            "title": "Wholesale Quantity (MOQ is 50 units)",
+            "required": true,
+            "label-one": "50-100 units",
+            "label-two": "100-200 units",
+            "label-three": "200-500 units",
+            "label-four": "500-1000 units",
+            "label-five": "1000+ units",
+            "label-six": ""
+          }
+        }
+      },
+      "block_order": [
+        "template--15200024002621__1eef23be-54fd-42b6-bd82-8f04bb397a75-16838729106a258439-0",
+        "template--15200024002621__1eef23be-54fd-42b6-bd82-8f04bb397a75-16838729106a258439-1",
+        "template--15200024002621__1eef23be-54fd-42b6-bd82-8f04bb397a75-16838729106a258439-2",
+        "d0abe320-b2ad-40a3-b251-98fa6e916f4b",
+        "ba0347f7-c953-4c13-98fd-06d54c44e596",
+        "112160f8-06c1-4bbc-908d-6d269062dfcd",
+        "1a79d6c4-2579-4bc6-9e49-5fe4dd92a00b",
+        "template--15200024002621__1eef23be-54fd-42b6-bd82-8f04bb397a75-16838729106a258439-3",
+        "f571b1cd-2084-4ffa-badd-c4dfc071f7f5"
+      ],
+      "settings": {
+      }
+    },
+    "1684288212c5ec56b4": {
+      "type": "apps",
+      "blocks": {
+        "80dcbda6-b8c9-4d2e-9059-64e46a5e4124": {
+          "type": "shopify:\/\/apps\/judge-me-product-reviews\/blocks\/featured_carousel\/61ccd3b1-a9f2-4160-9fe9-4fec8413e5d8",
+          "settings": {
+            "maxwidth": 1080
+          }
+        }
+      },
+      "block_order": [
+        "80dcbda6-b8c9-4d2e-9059-64e46a5e4124"
+      ],
+      "settings": {
+      }
+    }
+  },
+  "order": [
+    "main",
+    "1eef23be-54fd-42b6-bd82-8f04bb397a75",
+    "1684288212c5ec56b4"
+  ]
+}

@@ -1,0 +1,81 @@
+<section class="section border-top blog-section" data-section-type="featured-blog">
+<div class="container">
+  <h2 class="section-heading">{{ section.settings.sectionTitle }}</h2>
+  <div class="blog__posts">
+    {% for block in section.blocks %}
+      {% if block.type == "article" %}
+        {% assign article = block.settings.article %}
+        {% if article %}
+          <div class="blogs___inner">
+            <a href="{{ article.url }}">
+              <h3>{{ article.title }}</h3>
+              {% if article.image %}
+                <img src="{{ article.image | img_url : '400x400' }}" alt="Article Image">
+              {% endif %}
+            </a>
+          </div>
+        {% endif %}
+      {% endif %}
+    {% endfor %}
+  </div>
+</div>
+</section>
+<link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.9.0/slick.min.css'>
+<link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.9.0/slick-theme.min.css'>
+<script src='https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js'></script>
+<script src='https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.9.0/slick.min.js'></script>
+<script>
+  $(document).ready(function() {
+  $(".blog__posts").slick({
+    slidesToShow: 2,
+    slidesToScroll: 1,
+    arrows: true,
+    responsive: [
+      {
+        breakpoint: 639,
+        settings: {
+          slidesToShow: 1,
+          slidesToScroll: 1
+        }
+      }
+    ]
+  });
+});
+</script>
+{% schema %}
+{
+  "name": "Blog posts slider",
+  "class": "index-section",
+  "settings": [
+      {
+        "type": "text",
+        "id": "sectionTitle",
+        "label": "Title"
+      }
+  ],
+  "blocks": [
+		{
+			"type": "article",
+			"name": "Article",
+			"settings": [
+				{
+					"type": "article",
+					"id": "article",
+					"label": "Article"
+				}
+			]
+		}
+	],
+	"presets": [
+		{
+			"category": "Text",
+			"name": "Blog posts slider",
+			"blocks": [
+				{
+					"type": "article"
+				}
+			]
+		}
+	]
+}
+{% endschema %}

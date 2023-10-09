@@ -1,0 +1,150 @@
+{
+  "sections": {
+    "main": {
+      "type": "main-page",
+      "disabled": true,
+      "settings": {
+      }
+    },
+    "21162808-2643-4f24-b95c-47e6119a35bb": {
+      "type": "custom_contact_form",
+      "blocks": {
+        "template--15200023806013__21162808-2643-4f24-b95c-47e6119a35bb-16838715827cec7979-0": {
+          "type": "heading",
+          "settings": {
+            "title": "FTR Hair & Scalp Help Line"
+          }
+        },
+        "a1bcd13a-fe3f-4342-8699-7b7461b6cf40": {
+          "type": "select",
+          "settings": {
+            "title": "What is your general hair texture?",
+            "label-one": "Tighter coils (type 4b-4c)",
+            "label-two": "Tighter curls (type 3c-4a)",
+            "label-three": "Looser curls (type 3a-3b)",
+            "label-four": "Curly waves (type 2b-2c)",
+            "label-five": "Waves (type 1c-2a)",
+            "label-six": "Straight (type 1a-1b)"
+          }
+        },
+        "b47d31e3-a80d-471e-879f-3cea50bc2413": {
+          "type": "text",
+          "settings": {
+            "title": "Hair style (freeforms, mini fro, twisted locs, long coily curls, braids, wicks, straight, etc.)",
+            "required": true
+          }
+        },
+        "4e69b924-d1c6-4f01-be69-2b8aa9270fb5": {
+          "type": "radio",
+          "settings": {
+            "title": "How long is your hair?",
+            "required": true,
+            "label-one": "I cannot pull the front to my eyebrows",
+            "label-two": "I can pull the front to\/past my eyebrows",
+            "label-three": "I can pull the front to\/past my chin",
+            "label-four": "Hangs to\/past my mid-back",
+            "label-five": "Hangs to\/past my waist",
+            "label-six": "Hangs to\/past my knees"
+          }
+        },
+        "acb9df8b-9622-4cd2-8cf2-36eee06eafc7": {
+          "type": "radio",
+          "settings": {
+            "title": "Do you currently use our products?",
+            "required": true,
+            "label-one": "Yes, regularly",
+            "label-two": "Yes, but not regularly",
+            "label-three": "No, and I don't use natural products yet",
+            "label-four": "No, but I do use natural products",
+            "label-five": "",
+            "label-six": ""
+          }
+        },
+        "1548e7e6-1189-499b-88c3-afd3e867abec": {
+          "type": "body",
+          "settings": {
+            "title": "Ask your question in detail! Please include: \n· The products you use (brand specific) \n· How often you use them\n· How often you style",
+            "required": true
+          }
+        },
+        "4abb1387-a2a9-4839-be76-ad0da0726751": {
+          "type": "text",
+          "settings": {
+            "title": "Name",
+            "required": true
+          }
+        },
+        "2624730f-9df7-4111-ac0a-a34ff946defd": {
+          "type": "text",
+          "settings": {
+            "title": "Social Media Handle @ (optional)",
+            "required": false
+          }
+        },
+        "654f6d4d-3909-4a2f-ae2a-03e202d325a4": {
+          "type": "radio",
+          "settings": {
+            "title": "Which social media platform is the handle above for? (if entered)",
+            "required": false,
+            "label-one": "Instagram",
+            "label-two": "Facebook",
+            "label-three": "TikTok",
+            "label-four": "YouTube",
+            "label-five": "Pinterest",
+            "label-six": ""
+          }
+        },
+        "5047c94a-2231-483c-931d-40239bf31cda": {
+          "type": "email",
+          "settings": {
+            "title": "Email",
+            "required": true
+          }
+        },
+        "533c2482-25d6-4c06-86d5-c91ce3b57f4a": {
+          "type": "checkbox",
+          "settings": {
+            "title": "I understand that the advice I receive is not to be taken as professional medical advice. I understand that the recommendations that I receive are from internal FTR product specialist and should never be taken above the recommendations of a medical professional.",
+            "required": true
+          }
+        }
+      },
+      "block_order": [
+        "template--15200023806013__21162808-2643-4f24-b95c-47e6119a35bb-16838715827cec7979-0",
+        "a1bcd13a-fe3f-4342-8699-7b7461b6cf40",
+        "b47d31e3-a80d-471e-879f-3cea50bc2413",
+        "4e69b924-d1c6-4f01-be69-2b8aa9270fb5",
+        "acb9df8b-9622-4cd2-8cf2-36eee06eafc7",
+        "1548e7e6-1189-499b-88c3-afd3e867abec",
+        "4abb1387-a2a9-4839-be76-ad0da0726751",
+        "2624730f-9df7-4111-ac0a-a34ff946defd",
+        "654f6d4d-3909-4a2f-ae2a-03e202d325a4",
+        "5047c94a-2231-483c-931d-40239bf31cda",
+        "533c2482-25d6-4c06-86d5-c91ce3b57f4a"
+      ],
+      "settings": {
+      }
+    },
+    "1684288170d5be2f0a": {
+      "type": "apps",
+      "blocks": {
+        "c9feeccd-680d-4ae7-a48e-35cd81bd15d5": {
+          "type": "shopify:\/\/apps\/judge-me-product-reviews\/blocks\/featured_carousel\/61ccd3b1-a9f2-4160-9fe9-4fec8413e5d8",
+          "settings": {
+            "maxwidth": 1080
+          }
+        }
+      },
+      "block_order": [
+        "c9feeccd-680d-4ae7-a48e-35cd81bd15d5"
+      ],
+      "settings": {
+      }
+    }
+  },
+  "order": [
+    "main",
+    "21162808-2643-4f24-b95c-47e6119a35bb",
+    "1684288170d5be2f0a"
+  ]
+}

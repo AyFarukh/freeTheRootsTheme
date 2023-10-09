@@ -1,0 +1,135 @@
+<div
+  class="product-recommendations"
+  data-product-id="{{ product.id }}"
+  data-section-id="{{ section.id }}"
+  data-section-type="product-recommendations"
+  data-url="{{ routes.product_recommendations_url }}?section_id={{ section.id }}&limit={{ section.settings.products_per_row }}&product_id={{ product.id }}"
+  data-cc-animate
+>
+  {%- if recommendations.performed and recommendations.products_count > 0 -%}
+    <section class="border-top section products-section">
+      <div class="container">
+        <h2 class="section-heading">{{ section.settings.recommendations_title }}</h2>
+        <div class="product-grid row grid one-row" data-normheights=".image" data-normheights-inner="img">
+          {%- for product in recommendations.products -%}
+            {% render 'product-block',
+              product: product,
+              video_url: product.metafields.custom.second_video_url,
+              max_cols: section.settings.products_per_row
+            %}
+          {%- endfor -%}
+
+          {%- for i in (1..section.settings.products_per_row) -%}
+            <div
+              class="product-block product-block--flex-spacer flex column max-cols-{{ section.settings.products_per_row }} min-cols-2"
+            ></div>
+          {%- endfor -%}
+        </div>
+      </div>
+    </section>
+  {%- endif -%}
+</div>
+<script>
+  
+  
+  
+  
+  
+  
+  
+  function videoPlayer() {
+    if (window.screen.width < 768) {
+      const videos = document.querySelectorAll("video");
+      videos.forEach(video => {
+        video.removeAttribute("autoplay");
+      });
+
+      const config = {
+        rootMargin: "0px",
+        threshold: 1.0
+      };
+      let currentVideo = null;
+      let videoTimeoutID = null;
+
+      const callback = (entries) => {
+        entries.forEach((entry) => {
+          if (!entry.isIntersecting) {
+            if (currentVideo && currentVideo === entry.target) {
+              clearTimeout(videoTimeoutID);
+              currentVideo.pause();
+              currentVideo.parentElement.previousElementSibling.style.opacity = 1;
+              currentVideo.parentElement.style.opacity = 0;
+              currentVideo = null;
+            }
+          } else {
+            if (!currentVideo) {
+              currentVideo = entry.target;
+              config.root = document.querySelector(`#${currentVideo.id}`);
+              videoTimeoutID = setTimeout(() => {
+                currentVideo.play();
+                currentVideo.parentElement.previousElementSibling.style.opacity = 0;
+                currentVideo.parentElement.style.opacity = 1;
+              }, 1000);
+            }
+          }
+        });
+      };
+
+      const observer = new IntersectionObserver(callback, config);
+      videos.forEach(element => {
+        observer.observe(element);
+      });
+    } else {
+      const videos = document.querySelectorAll("video");
+      videos.forEach(video => {
+        video.setAttribute("autoplay", "autoplay");
+      });
+    }
+  };
+ $(document).ready(function(){
+    videoPlayer()
+  })
+  $(window).scroll(function(){
+    videoPlayer()
+  })
+   $(window).resize(function(){
+    videoPlayer()
+  })
+
+
+
+
+
+</script>
+{% schema %}
+{
+  "name": "Product recommendations",
+  "settings": [
+    {
+      "type": "paragraph",
+      "content": "Dynamic recommendations change and improve with time. [Learn more](https://help.shopify.com/en/themes/development/recommended-products)"
+    },
+    {
+      "type": "text",
+      "id": "recommendations_title",
+      "label": "Heading",
+      "default": "You may also like"
+    },
+    {
+      "type": "checkbox",
+      "id": "grid_show_vendor",
+      "label": "Show vendor",
+      "default": false
+    },
+    {
+      "type": "range",
+      "id": "products_per_row",
+      "label": "Maximum products per row",
+      "min": 2,
+      "max": 5,
+      "step": 1,
+      "default": 4
+    }
+  ]
+}
+{% endschema %}

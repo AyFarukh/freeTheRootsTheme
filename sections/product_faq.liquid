@@ -1,0 +1,139 @@
+<style>
+  .faqBottom {
+    padding-block:50px;
+  }
+  
+.question {
+    font-weight: 600;
+    padding: 16px 50px 16px 16px;
+    position: relative;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    background: #F5F5F5;
+    margin: 8px 0;
+    color: #000;
+    font-size: 18px;
+}
+  
+  .question::after {
+    content: "\002B";
+    font-size: 28px;
+    position: absolute;
+    right: 20px;
+    transition: 0.3s;
+  }
+
+  .question.active::after {
+    content: "-";
+    font-size: 2.2rem;
+  }
+  
+  .answercount {
+    display:none; 
+  }
+  
+  .answer {
+      padding: 16px 0;
+      line-height: 1.5rem;
+  }
+
+  @media screen and (max-width:749.98px){
+    .question {
+        padding: 14px 50px 14px 16px;
+        font-size: 16px;
+    }
+
+    .faqheading {
+        font-size: 24px;
+        text-align:left;
+        margin-bottom:16px;
+    }
+
+    .answer {
+        padding: 5px 0;
+    }
+
+    .faqBottom {
+        padding-block: 0px;
+    }
+  }
+</style>
+<div class="container faqBottom">
+  {% if section.settings.section-subheading !=blank %}
+    <h1 class="faqheading" >
+      {{ section.settings.section-subheading }}
+    </h1>
+  {% endif %}
+  <div class="FaqSection">
+   {% for block in section.blocks %}
+     <div class="questionBox">
+              <div class="question">
+                 {{block.settings.question}}
+               </div>
+              <div class="answercount">
+                <div class="answer">
+                  {{ block.settings.answer }}
+                </div>
+              </div>
+     </div>
+      {% endfor %}
+  </div>
+</div>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+<script defer>
+      $(document).ready(function () {
+        $(".question").click(function () {
+          if ($(this).hasClass("active")) {
+            $(this).siblings(".answercount").slideUp();
+            $(this).removeClass("active");
+          } else {
+            $(".answercount").slideUp();
+            $(".question").removeClass("active");
+            $(this).toggleClass("active");
+            $(this).siblings(".answercount").slideDown();
+          }
+        });
+      });
+    </script>
+{% schema %}
+{
+"name": "Faq block",
+    "settings": [ 
+      {
+        "type": "text",
+        "id": "section-subheading",
+        "label": "Faq heading"
+      }
+],
+"name": "Faq",
+
+"blocks": [
+			{
+				"type": "text",
+				"name": "Question",
+				"settings": [
+					{
+						"type": "text",
+						"id": "question",
+						"label": "Question"
+					},
+					{
+						"type": "text",
+						"id": "answer",
+						"label": "Answer"
+					}
+					
+					
+				]
+			}
+		],
+       "presets": [
+          {
+            "name": "Faq block"
+          }
+    ]
+		
+	}
+
+{% endschema %}

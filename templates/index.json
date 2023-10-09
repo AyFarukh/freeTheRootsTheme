@@ -1,0 +1,465 @@
+{
+  "sections": {
+    "1478797384865": {
+      "type": "slideshow",
+      "blocks": {
+        "1478797384865-0": {
+          "type": "image",
+          "settings": {
+            "image": "shopify:\/\/shop_images\/banner1.jpg",
+            "mobile_image": "shopify:\/\/shop_images\/bannerMobile_efb36553-40a7-4690-ae7a-6ab1954d8508.jpg",
+            "subheading": "",
+            "custom_liquid": "<div class=\"jdgm-carousel-title-and-link hero_slider\">\n    <a href=\"https:\/\/www.freetheroots.com\/pages\/reviews\">\n<span style=\"display:block\" class=\"jdgm-all-reviews-rating hero_slider\">\n    <span class=\"jdgm-star jdgm--on\"><\/span>\n    <span class=\"jdgm-star jdgm--on\"><\/span>\n    <span class=\"jdgm-star jdgm--on\"><\/span>\n    <span class=\"jdgm-star jdgm--on\"><\/span>\n    <span class=\"jdgm-star jdgm--on\"><\/span>\n<\/span>\n    <span class=\"total_reviews\"> from {{ shop.metafields.judgeme.all_reviews_count }} reviews <\/span>\n<\/a>\n<\/div>",
+            "title": "From Nature To Body",
+            "title_size": 40,
+            "heading_h1": false,
+            "text": "<p>Made From Nature To Nourish Your Natural Hair & Skin<\/p>",
+            "enlarge_text": true,
+            "button_1_link": "shopify:\/\/collections",
+            "button_1_label": "Shop now",
+            "button_1_style": "primary",
+            "button_2_link": "",
+            "button_2_label": "",
+            "button_2_style": "primary",
+            "text_alignment": "center center",
+            "mobile_text_alignment": "center"
+          }
+        }
+      },
+      "block_order": [
+        "1478797384865-0"
+      ],
+      "settings": {
+        "height": "adapt",
+        "height_desktop": 600,
+        "height_mobile": 400,
+        "full_width": true,
+        "mobile_overlay_under": false,
+        "image_overlay_style": "shadow",
+        "slide_transition": "slide",
+        "slide_navigation": "arrows",
+        "autoplay": false,
+        "autoplay_speed": 8
+      }
+    },
+    "6dbdeae9-dd98-4df0-9566-bd47aefc26f8": {
+      "type": "text-columns-with-images",
+      "blocks": {
+        "template--15199161614397__6dbdeae9-dd98-4df0-9566-bd47aefc26f8-16843037029bcb96e7-0": {
+          "type": "text_block",
+          "settings": {
+            "enable_image": true,
+            "image": "shopify:\/\/shop_images\/like_60x60_2a353d5e-45e3-4110-9522-bf660061d987.png",
+            "link": "shopify:\/\/pages\/rewards-program-page",
+            "image_width": 700,
+            "title": "Loyalty Program",
+            "titleUrl": "shopify:\/\/pages\/rewards-program-page",
+            "text": "",
+            "button_label": ""
+          }
+        },
+        "template--15199161614397__6dbdeae9-dd98-4df0-9566-bd47aefc26f8-16843037029bcb96e7-2": {
+          "type": "text_block",
+          "settings": {
+            "enable_image": true,
+            "image": "shopify:\/\/shop_images\/free-shipping_60x60_eaf2d784-b4fb-4be0-896a-26bc52f5cd36.png",
+            "link": "shopify:\/\/policies\/shipping-policy",
+            "image_width": 700,
+            "title": "Free Shipping on<br> Domestic Orders over $100",
+            "titleUrl": "shopify:\/\/policies\/shipping-policy",
+            "text": "",
+            "button_label": ""
+          }
+        },
+        "template--15199161614397__6dbdeae9-dd98-4df0-9566-bd47aefc26f8-16843037029bcb96e7-1": {
+          "type": "text_block",
+          "settings": {
+            "enable_image": true,
+            "image": "shopify:\/\/shop_images\/quality_60x60_8ca556cb-5a94-476a-b55f-02b2ff04efb1.png",
+            "link": "https:\/\/www.freetheroots.com\/collections\/all",
+            "image_width": 700,
+            "title": "Vegan & Cruelty Free",
+            "titleUrl": "https:\/\/www.freetheroots.com\/collections\/all",
+            "text": "",
+            "button_label": ""
+          }
+        }
+      },
+      "block_order": [
+        "template--15199161614397__6dbdeae9-dd98-4df0-9566-bd47aefc26f8-16843037029bcb96e7-0",
+        "template--15199161614397__6dbdeae9-dd98-4df0-9566-bd47aefc26f8-16843037029bcb96e7-2",
+        "template--15199161614397__6dbdeae9-dd98-4df0-9566-bd47aefc26f8-16843037029bcb96e7-1"
+      ],
+      "settings": {
+        "custom_class": "homeIconSection",
+        "title": "",
+        "text_alignment": "center",
+        "button_style": "primary",
+        "media_shape": "natural",
+        "alternate_bg_color": false
+      }
+    },
+    "16838004501341ee50": {
+      "type": "apps",
+      "blocks": {
+        "aded660a-5e0d-47b7-8f55-91e8181c9a41": {
+          "type": "shopify:\/\/apps\/judge-me-product-reviews\/blocks\/featured_carousel\/61ccd3b1-a9f2-4160-9fe9-4fec8413e5d8",
+          "settings": {
+            "maxwidth": 1080
+          }
+        }
+      },
+      "block_order": [
+        "aded660a-5e0d-47b7-8f55-91e8181c9a41"
+      ],
+      "settings": {
+      }
+    },
+    "05ff87aa-3a49-4981-9757-1260c6845627": {
+      "type": "gallery",
+      "blocks": {
+        "template--15199161614397__05ff87aa-3a49-4981-9757-1260c6845627-168385896307c603e6-0": {
+          "type": "image",
+          "settings": {
+            "image": "shopify:\/\/shop_images\/IMG_7432_4.jpg",
+            "video_external": "",
+            "enlarge_image": false,
+            "subheading": "",
+            "title": "Natural Bars For Hair & Body",
+            "button_label": "",
+            "link": "shopify:\/\/collections\/soap",
+            "text_alignment": "center center"
+          }
+        },
+        "template--15199161614397__05ff87aa-3a49-4981-9757-1260c6845627-168385896307c603e6-1": {
+          "type": "image",
+          "settings": {
+            "image": "shopify:\/\/shop_images\/IMG_0082_1_8b7193af-182b-4656-990f-ca827f5ce522.jpg",
+            "video_external": "",
+            "enlarge_image": false,
+            "subheading": "",
+            "title": "Best Cyber Monday Deals",
+            "button_label": "",
+            "link": "shopify:\/\/collections\/best-cyber-monday-deals",
+            "text_alignment": "center center"
+          }
+        },
+        "template--15199161614397__05ff87aa-3a49-4981-9757-1260c6845627-168385896307c603e6-2": {
+          "type": "image",
+          "settings": {
+            "video_external": "",
+            "enlarge_image": false,
+            "subheading": "",
+            "title": "Aloe Hydrating Mists",
+            "button_label": "",
+            "link": "shopify:\/\/collections\/aloe-hydrating-mists",
+            "text_alignment": "center center"
+          }
+        },
+        "24fa4f2d-129f-41f4-b0d9-06c21aea453b": {
+          "type": "image",
+          "settings": {
+            "video_external": "",
+            "enlarge_image": false,
+            "subheading": "",
+            "title": "Small Biz Saturday Favs",
+            "button_label": "",
+            "link": "shopify:\/\/collections\/small-business-saturday-favs",
+            "text_alignment": "center center"
+          }
+        },
+        "cd61660d-2518-492a-a5ac-0605c93deec2": {
+          "type": "image",
+          "settings": {
+            "image": "shopify:\/\/shop_images\/IMG_4920-Edit_1.jpg",
+            "video_external": "",
+            "enlarge_image": false,
+            "subheading": "",
+            "title": "This Week's Best-Sellers",
+            "button_label": "",
+            "link": "",
+            "text_alignment": "center center"
+          }
+        }
+      },
+      "block_order": [
+        "template--15199161614397__05ff87aa-3a49-4981-9757-1260c6845627-168385896307c603e6-0",
+        "template--15199161614397__05ff87aa-3a49-4981-9757-1260c6845627-168385896307c603e6-1",
+        "template--15199161614397__05ff87aa-3a49-4981-9757-1260c6845627-168385896307c603e6-2",
+        "24fa4f2d-129f-41f4-b0d9-06c21aea453b",
+        "cd61660d-2518-492a-a5ac-0605c93deec2"
+      ],
+      "disabled": true,
+      "settings": {
+        "custom_class": "top_category_section use-alt-bg custom__category",
+        "title": "Top categories",
+        "grid": 5,
+        "desktop_image_height": 300,
+        "mobile_image_height": 400,
+        "sub_title_size": 18,
+        "title_size": 15,
+        "button_style": "primary",
+        "enable_margin": true,
+        "enable_carousel": false,
+        "image_overlay_style": "none",
+        "alternate_bg_color": false,
+        "caption_show": true,
+        "caption_color": "#464654",
+        "caption_bg": "#ffffff",
+        "caption_opacity": 100
+      }
+    },
+    "1590157729940": {
+      "type": "featured-collections",
+      "blocks": {
+        "1590157729940-0": {
+          "type": "collection",
+          "settings": {
+            "collection": "kits-bundles"
+          }
+        },
+        "1590157729940-1": {
+          "type": "collection",
+          "settings": {
+            "collection": "soap"
+          }
+        },
+        "1590157729940-2": {
+          "type": "collection",
+          "settings": {
+            "collection": "aloe-hydrating-mists"
+          }
+        },
+        "1590157729940-3": {
+          "type": "collection",
+          "settings": {
+            "collection": "acv-conditioning-clarifying-rinses"
+          }
+        },
+        "1590578358116": {
+          "type": "collection",
+          "settings": {
+            "collection": "accessories-merch"
+          }
+        }
+      },
+      "block_order": [
+        "1590157729940-0",
+        "1590157729940-1",
+        "1590157729940-2",
+        "1590157729940-3",
+        "1590578358116"
+      ],
+      "settings": {
+        "shopByCollections": "shopByCollections",
+        "heading": "Top categories",
+        "layout": "carousel",
+        "collections_per_row": 3,
+        "mobile_collections_per_row": "1",
+        "collection_use_prod_image": true,
+        "show_view_all": true,
+        "alternate_bg_color": false
+      }
+    },
+    "a4a24bdd-520c-4bf2-a09e-39d40edc4235": {
+      "type": "image-with-text-overlay",
+      "settings": {
+        "image": "shopify:\/\/shop_images\/IMG_0717_4.jpg",
+        "image_link": "",
+        "height": "fixed",
+        "height_desktop": 450,
+        "height_mobile": 400,
+        "subheading": "",
+        "title": "Build The Ultimate Bundle!",
+        "title_size": 40,
+        "heading_h1": true,
+        "text": "<p>For an entire<strong> $60 off<\/strong>, build the ultimate bundle that has everything you need. Best for families! Check it out below.<\/p>",
+        "enlarge_text": true,
+        "button1_label": "Family Pack",
+        "button1_link": "shopify:\/\/products\/family-pack",
+        "button2_label": "",
+        "button2_link": "",
+        "button_style": "primary",
+        "text_alignment": "center center",
+        "full_width": true,
+        "mobile_overlay_under": false,
+        "image_overlay_style": "standard"
+      }
+    },
+    "73215063-f7f7-40d1-94f2-29c27b81832b": {
+      "type": "image-with-text",
+      "settings": {
+        "custom_class": "image_text_section homeStartedSec",
+        "subheading": "",
+        "title": "YOUR FAVORITE GRAPEFRUIT MIST IS BACK!",
+        "text": "<p>And she didn't come alone... Say hello to our Citrus Sunshine Bar and brand new Orange Peel ACV Rinse. This trio is our Christmas-in-Summer gift to your growing crown!<\/p><p>This combination is for maximum scalp\/hair health, with a KEEN focus on growth and relieving various scalp issues. Check them all out below.<\/p>",
+        "button_label": "New Summer Releases",
+        "button_link": "shopify:\/\/collections\/summer-citrus-releases",
+        "button_style": "primary",
+        "text_alignment": "center",
+        "text_width": 50,
+        "image": "shopify:\/\/shop_images\/IMG_1176.png",
+        "sale_info": "",
+        "additional_info": "",
+        "image_width": 100,
+        "image_position": "left",
+        "media_size": "cover",
+        "alternate_bg_color": false
+      }
+    },
+    "1590158040284": {
+      "type": "image-with-text",
+      "settings": {
+        "custom_class": "image_text_section homeStartedSec",
+        "subheading": "",
+        "title": "The ACV Rinse That's Changing The Game",
+        "text": "<p>There's nothing you can find that conditions, removes build-up, restores your hair's pH, and leads to growth like this! It has over 100 five star reviews for a reason. Tap below and transform your crown every wash day!<\/p>",
+        "button_label": "Buy Now",
+        "button_link": "shopify:\/\/products\/conditioning-clarifying-acv-rinse",
+        "button_style": "primary",
+        "text_alignment": "center",
+        "text_width": 50,
+        "image": "shopify:\/\/shop_images\/IMG_3422_2.jpg",
+        "sale_info": "",
+        "additional_info": "",
+        "image_width": 100,
+        "image_position": "left",
+        "media_size": "contain",
+        "alternate_bg_color": true
+      }
+    },
+    "1590506747837": {
+      "type": "featured-collection",
+      "custom_css": [
+        "@media (max-width: 575px) {.product-grid.grid .column:not(.product-block--flex-spacer):not(.product-block--gutter-0) {padding: 0; } .product-grid.grid .column.flex.min-cols-2:not(.product-block--gap-0), .product-grid.grid .column.flex.max-cols-4:not(.product-block--gap-0) {width: calc(75% - 10px); }}"
+      ],
+      "settings": {
+        "csutomClass": "backInStock",
+        "title": "Top Sellers & Deals",
+        "collection": "top-sellers-deals",
+        "layout": "carousel",
+        "products_per_row": 4,
+        "mobile_products_per_row": "2",
+        "row_count_int": 1,
+        "grid_show_vendor": false,
+        "show_brand": true,
+        "show_view_all": true,
+        "alternate_bg_color": false
+      }
+    },
+    "ed782af4-03c0-439b-a6ea-18aa186e0d0e": {
+      "type": "rich-text",
+      "disabled": true,
+      "settings": {
+        "subheading": "",
+        "title": "About us",
+        "title_size": 40,
+        "heading_h1": false,
+        "text": "<p>There's nothing you can find that conditions, removes build-up, restores your hair's pH, and leads to growth like this! It has over 100 five star reviews for a reason. Tap below and transform your crown every wash day!<br\/><br\/>Our community is the heart of who we are and we understand the importance of your hair & skin. Before we released our first product (our <a href=\"https:\/\/www.freetheroots.com\/collections\/soap\" title=\"Natural Soap For Hair & Body\">soap bars<\/a>), we helped over 10,000 individuals through their healthy hair journeys. <\/p><p>We now craft recipes with one goal in mind, to effectively improve the health of your hair & skin. Through freeing the root of the truth and intentional creations, we will help all to embrace their natural beauty and take care of it with nature!<\/p>",
+        "enlarge_text": false,
+        "button_label": "",
+        "button_link": "",
+        "button_style": "primary",
+        "text_alignment": "center",
+        "full_width": false,
+        "no_padding": false,
+        "color_bg": "",
+        "alternate_bg_color": false
+      }
+    },
+    "099ad640-ba66-44b9-a642-e5c175181aae": {
+      "type": "custom-img-with-txt",
+      "settings": {
+        "custom_class": "paddingV textWithImageSection",
+        "image": "shopify:\/\/shop_images\/IMG_0931_2.jpg",
+        "image_link": "",
+        "subheading": "",
+        "title": "About us",
+        "title_size": 40,
+        "heading_h1": false,
+        "text": "<p>We are 3 brothers and our community is the heart of who we are! We deeply understand the importance of your hair & skin. Before we released our first product (our <a href=\"https:\/\/www.freetheroots.com\/collections\/soap\" title=\"Natural Soap For Hair & Body\">soap bars<\/a>), we helped over 10,000 individuals through their healthy hair journeys. <\/p><p>We now craft recipes with one goal in mind, to effectively improve the health of your hair & skin. Through freeing the root of the truth and intentional creations, we will help all to embrace their natural beauty and take care of it with nature!<\/p>",
+        "enlarge_text": true,
+        "button1_label": "",
+        "button1_link": "",
+        "button2_label": "",
+        "button2_link": "",
+        "button_style": "primary",
+        "text_alignment": "center center",
+        "full_width": true,
+        "mobile_overlay_under": false,
+        "image_overlay_style": "standard"
+      }
+    },
+    "ac953d75-1b03-4ab1-a8f8-fac296c6f316": {
+      "type": "image-with-text-overlay",
+      "disabled": true,
+      "settings": {
+        "image": "shopify:\/\/shop_images\/IMG_0242_1.jpg",
+        "image_link": "",
+        "height": "natural",
+        "height_desktop": 650,
+        "height_mobile": 550,
+        "subheading": "",
+        "title": "About us",
+        "title_size": 40,
+        "heading_h1": false,
+        "text": "<p>Our community is the heart of who we are and we understand the importance of your hair & skin. Before we released our first product (our <a href=\"https:\/\/www.freetheroots.com\/collections\/soap\" title=\"Natural Soap For Hair & Body\">soap bars<\/a>), we helped over 10,000 individuals through their healthy hair journeys. <\/p><p>We now craft recipes with one goal in mind, to effectively improve the health of your hair & skin. Through freeing the root of the truth and intentional creations, we will help all to embrace their natural beauty and take care of it with nature!<\/p>",
+        "enlarge_text": true,
+        "button1_label": "",
+        "button1_link": "",
+        "button2_label": "",
+        "button2_link": "",
+        "button_style": "primary",
+        "text_alignment": "center center",
+        "full_width": true,
+        "mobile_overlay_under": false,
+        "image_overlay_style": "standard"
+      }
+    },
+    "bcbf52db-ec8a-4e38-b52a-55e458e62aa7": {
+      "type": "image-with-text",
+      "settings": {
+        "custom_class": "image_text_section homeStartedSec",
+        "subheading": "",
+        "title": "Hair & Skin",
+        "text": "<p>We are DEDICATED to the health of your hair and skin. From every single ingredient use, to the specific product lines we offer. <\/p><p>No product offers the exact same benefits as the next! Tap below and check out every last one of them.<\/p>",
+        "button_label": "View All Products",
+        "button_link": "shopify:\/\/collections\/all",
+        "button_style": "primary",
+        "text_alignment": "center",
+        "text_width": 50,
+        "image": "shopify:\/\/shop_images\/hair_1_1_1.png",
+        "sale_info": "",
+        "additional_info": "",
+        "image_width": 100,
+        "image_position": "left",
+        "media_size": "cover",
+        "alternate_bg_color": false
+      }
+    },
+    "9a11d6c6-ab3c-4eb6-8e81-6436e775fb9a": {
+      "type": "custom-liquid",
+      "disabled": true,
+      "settings": {
+        "no_margins": false,
+        "custom_liquid": "Customers rate us {{ shop.metafields.judgeme.all_reviews_rating | round: 1 }}\/5 based on {{ shop.metafields.judgeme.all_reviews_count }} reviews."
+      }
+    }
+  },
+  "order": [
+    "1478797384865",
+    "6dbdeae9-dd98-4df0-9566-bd47aefc26f8",
+    "16838004501341ee50",
+    "05ff87aa-3a49-4981-9757-1260c6845627",
+    "1590157729940",
+    "a4a24bdd-520c-4bf2-a09e-39d40edc4235",
+    "73215063-f7f7-40d1-94f2-29c27b81832b",
+    "1590158040284",
+    "1590506747837",
+    "ed782af4-03c0-439b-a6ea-18aa186e0d0e",
+    "099ad640-ba66-44b9-a642-e5c175181aae",
+    "ac953d75-1b03-4ab1-a8f8-fac296c6f316",
+    "bcbf52db-ec8a-4e38-b52a-55e458e62aa7",
+    "9a11d6c6-ab3c-4eb6-8e81-6436e775fb9a"
+  ]
+}

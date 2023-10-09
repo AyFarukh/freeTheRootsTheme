@@ -1,0 +1,1625 @@
+{% assign HideAssets = hideAssets | default: 0 %}{% if HideAssets != '1' %}{% render 'smart-css' %}{% endif %}
+			{% assign smarthProduct = product %}
+			{% assign smarthCustId = customer.id %}
+			{% assign smartbGiftCard = product.gift_card? %}
+			{% assign smarthVarient = product.variants.size %}
+			{%- assign smarthmoneyformat = shop.money_format | split: "{{" | last | remove: "}}" | strip | strip_html -%}
+			{% if smarthmoneyformat == "amount_with_comma_separator" or smarthmoneyformat == "amount_no_decimals_with_comma_separator" %}
+				{% assign smarthProdPrice = product.price | money_without_currency | remove: "." | replace: ",", "." %}
+				{% assign smarthProdPriceCompare = product.compare_at_price | money_without_currency | remove: "." | replace: ",", "." | default: 0 %}
+			{% else %} 
+				{% assign smarthProdPrice = product.price | money_without_currency | remove: "," %}
+				{% assign smarthProdPriceCompare = product.compare_at_price | money_without_currency | remove: "," | default: 0 %}
+			{% endif %}
+			{% assign smarthProdPrice = product.price | divided_by: 100.00 %}
+			{% assign smarthCustomerTag = customer.tags | downcase %}
+			{% assign smarthCompanyName = customer.current_company.name | downcase %}
+			{% assign smarthPublishedDate = product.published_at | date: "%s" %}
+			{% assign smarthPublishDateDiff = "now" | date: "%s" | minus: smarthPublishedDate %}
+			{% assign smarthTemplate = template | downcase %}
+			{% assign smarthLanguage = request.locale.iso_code | downcase %}
+			{% assign smartmetafield = smarthProduct.metafields %}
+			{% assign smarthProductTitle = smarthProduct.title | downcase %}
+			{% assign smarthProductType = smarthProduct.type | downcase %}
+			{% assign smarthProductVendor = smarthProduct.vendor | downcase %}
+			{% assign smarthShopifyTags = smarthProduct.tags | downcase %}
+			{% assign smarthProductWeight = product.variants.first.weight %}
+			{% assign smarthUTC = "now" | date: "%s" %}
+			{% assign smarthstartTime = "633891600"  %}
+			{% assign smarthEndTime = "2053962000"  %}
+			{% assign smarthMaxDisplayHighlight = smarthMaxDisplayHighlight | default: 10 %}	
+			{% assign smarthCreatedDateSec = smarthProduct.created_at | date: "%s" %}
+			{% assign smarthDateDiff = "now" | date: "%s" | minus: smarthCreatedDateSec %}
+			{% assign smarthCollectionIds = smarthProduct.collections | map: "id" | default: 0  %}			
+			{% assign smarthHighlightCounter = 1 %}
+			{% assign SaleAmount    = 0 %}	
+			{% assign VariantCount = product.variants.size %}
+			{% assign SalePercent   = 0 %}
+			{% assign CustomerOrderCount = customer.orders_count | default: 0 %}
+			{% assign CustomerTotalSpent = customer.total_spent | divided_by: 100.00  | default: 0 %}
+			{% assign ProductSKU = product.selected_or_first_available_variant.sku | downcase | default: 0 %}
+			{% assign VariantSKU = product.selected_or_first_available_variant.sku | downcase | default: 0 %}
+			{% assign VariantSelectedOption = product.selected_or_first_available_variant.title | downcase | default: 0 %}
+			{% assign smartGroup = smarthGroup | default: "1" %}
+			{% assign smarthDesktop = smartGroup | append: "smarthDesktop" %}
+			{% assign smartHighlights = smartGroup | append: "smartHighlights" %}
+            {% if smarthProduct.price and smarthProduct.compare_at_price %}
+				{% assign SaleAmount = smarthProduct.compare_at_price | minus: smarthProduct.price %}	
+				{% if SaleAmount > 0 %}
+					{% if smarthmoneyformat == "amount_with_comma_separator" or smarthmoneyformat == "amount_no_decimals_with_comma_separator" or  smarthmoneyformat contains "amount_with_comma_separator" %}
+						{% assign SalePercent = product.compare_at_price | minus: product.price | times: 100.0 | divided_by: product.compare_at_price | money_without_currency | replace: ",", "." | times: 100 | remove: ".0" | plus: 0 %}
+					{% elsif smarthmoneyformat contains "amount_no_decimals" %} 
+						{% assign divisor = product.compare_at_price  | times: 1.0 %}
+						{% assign SalePercent = product.compare_at_price | minus: product.price | divided_by: divisor  | times: 100.0 | round %}
+					{% else %} 
+						{% assign SalePercent = product.compare_at_price | minus: product.price | times: 100.0 | divided_by: product.compare_at_price | money_without_currency | times: 100 | remove: ".0" | plus: 0 %}
+					{% endif %}
+           		{% endif %}
+        	{% endif %}
+        	{% assign Inventory = 0 %}
+			{% assign Inventory2 = 0 %}
+			{% assign SmarthVariantInventory = 0 %}
+			{% assign SmarthVariantInventoryPolicy = "any" %}
+			{% if passvariantsmarth.id %} 
+				{% assign SmarthVariantInventory = passvariantsmarth.inventory_quantity %}	
+				{% assign SmarthVariantInventoryPolicy = passvariantsmarth.inventory_policy %}
+				{% assign VariantSKU = passvariantsmarth.sku | downcase %}
+				{% assign VariantSelectedOption = passvariantsmarth.title | downcase %}
+				{% assign VariantMetafield=passvariantsmarth.metafields %}
+			{% endif %}
+			{% assign SaleAmountVar  = 0 %}	
+			{% assign SalePercentVar = 0 %}
+			{% assign SalePercentMin = 0 %}
+			{% assign SalePercentMax = 0 %}
+			{% assign VariantSaleAmount = SaleAmountVar %}	
+			{% assign VariantSalePercent = SalePercentVar %}
+        	{% for productVariant in smarthProduct.variants %}
+				{% assign Inventory2 = productVariant.inventory_quantity | at_least: 0 %}
+				{% assign Inventory = Inventory | plus: Inventory2 %}
+				{% if productVariant.price and productVariant.compare_at_price %}
+					{% assign SaleAmountVar = productVariant.compare_at_price | minus: productVariant.price %}	
+					{% if SaleAmountVar > 0 %}
+						{% if smarthmoneyformat == "amount_with_comma_separator" or smarthmoneyformat == "amount_no_decimals_with_comma_separator" or  smarthmoneyformat contains "amount_with_comma_separator" %}
+							{% assign SalePercentVar = productVariant.compare_at_price | minus: productVariant.price | times: 100.0 | divided_by: productVariant.compare_at_price | money_without_currency | replace: ",", "." | times: 100 | remove: ".0" | plus: 0 %}
+						{% elsif smarthmoneyformat contains "amount_no_decimals" %} 
+							{% assign divisor = productVariant.compare_at_price  | times: 1.0 %}
+							{% assign SalePercentVar = productVariant.compare_at_price | minus: productVariant.price | divided_by: divisor  | times: 100.0 | round %}
+						{% else %} 
+							{% assign SalePercentVar = productVariant.compare_at_price | minus: productVariant.price | times: 100.0 | divided_by: productVariant.compare_at_price | money_without_currency | times: 100 | remove: ".0" | plus: 0 %}
+						{% endif %}
+						{% if SalePercentMin == 0 or SalePercentMin > SalePercentVar %}
+							{% assign SalePercentMin = SalePercentVar %}
+						{% endif %}
+						{% if SalePercentMax == 0 or SalePercentMax < SalePercentVar %}
+							{% assign SalePercentMax = SalePercentVar %}
+						{% endif %}
+						{% if passvariantsmarth.id %} 
+							{% if passvariantsmarth.id == productVariant.id %} 
+								{% assign VariantSaleAmount = SaleAmountVar %}	
+								{% assign VariantSalePercent = SalePercentVar %}
+							{% endif %}
+						{% endif %}
+					{% endif %}
+				{% endif %}		
+			{% endfor %}<div class="{{smartHighlights}} smartHighlights smart-container outersmarth{{product.id}}-{{smartGroup}} {{smarthOuterClass}}" style="display:none;{{ smarthOuterStyle }}box-sizing: border-box; color: rgb(102, 102, 102); position: relative; border-radius: 0.3em; border: 2px solid rgb(243, 255, 253); box-shadow: rgba(0, 0, 0, 0.14) 0px 2px 2px 0px, rgba(0, 0, 0, 0.12) 0px 3px 1px -2px, rgba(0, 0, 0, 0.2) 0px 1px 5px 0px;" data-smarthOuterClass="{{smarthOuterClass}}" data-smarthOuterStyle="{{smarthOuterStyle}}" data-smarthInnerClass="{{smarthInnerClass}}" data-smarthInnerStyle="{{smarthInnerStyle}}" data-smarthImageClass="{{smarthImageClass}}" data-smarthImageStyle="{{smarthImageStyle}}" data-smarthTextClass="{{smarthTextClass}}" data-smarthTextStyle="{{smarthTextStyle}}" data-smarthGroup="{{smartGroup}}" >
+				<div class="smarthWrapper smart-pb-1 smart-row smart-pt-2 smart-pl-2 smart-pr-2">	
+		{% comment %} Start Highlight: 1 {% endcomment %}
+		{% if smarthHighlightCounter <= smarthMaxDisplayHighlight %}
+			 {% assign isStartbShowHighlight = false %} {% assign smarthProductCollections = "174431961149,76827557933,268452331581" | split: "," %}{% assign issmarthProductCollectionFound0 = false %}
+						{% for collectionid in smarthProductCollections %}
+							{% assign collectionid2 = collectionid | plus: 0 %}
+							{% for shopifyrealcollection in smarthCollectionIds %}
+								{% if shopifyrealcollection == collectionid2 %}
+									{% assign issmarthProductCollectionFound0 = true %}
+									{% break %}
+								{% endif %}
+							{% endfor %}
+						{% endfor %}{% if product.metafields.smart.myordercount != blank %}
+						{% if product.metafields.smart.myordercount.value.ordercount %}
+							{% assign OrderCount = product.metafields.smart.myordercount.value.ordercount | default: 0 %}
+							{% assign RecentSoldCount = product.metafields.smart.myordercount.value.recentcount | default: 0 %}
+						{% else%}
+							{% assign OrderCount = product.metafields.smart.myordercount.ordercount | default: 0 %}
+							{% assign RecentSoldCount = product.metafields.smart.myordercount.recentcount | default: 0 %}
+						{% endif %}
+					{% else  %} 
+						{% assign OrderCount = product.metafields.smart.ordercount | default: 0 %}
+						{% assign RecentSoldCount = product.metafields.smart.recentcount | default: 0 %}
+					{% endif %}{% if  true == issmarthProductCollectionFound0  %}{% assign isStartbShowHighlight = true %}{% assign smarthExProductIds = "6951127220285" | split: "," %}
+				{% assign smarthExProductId = smarthProduct.id | downcase %}
+				{% if smarthExProductIds contains smarthExProductId %}
+					{% assign isStartbShowHighlight = false %}
+				{% endif %}{% endif %}{% assign smarthUTC 		= "now" | date: "%s" %}
+			{% assign smarthUTC 		= smarthUTC | plus: 0 %}
+			{% assign smarthStartTime = 633891600  %}
+			{% assign smarthEndTime = 2053962000  %}
+			{% if smarthStartTime <= smarthUTC and smarthEndTime >= smarthUTC %}{% if isStartbShowHighlight == true %} 
+				{% assign smarthighlightGroup = '1' %} 
+				{% if smartGroup == smarthighlightGroup %}
+				{% assign smarthHighlightCounter = smarthHighlightCounter | plus: 1 %}{% assign lasthstring = '' %}{% assign lasthstringsubtitle = '' %}<div  class="{{smarthDesktop}} smart-px-0 smart-pb-2 smart-col-md-6 smart-col-sm-6 smart-col-12 {{smarthInnerClass}} smarth-15323     "  data-countryselectedh= '' data-screensizeselectedh= ''  countryrule=1 visitorcountryrule=0 style="  {{smarthInnerStyle}}  " onclick="shlink('','0','15323','1');">
+    <div class="smarthImageOuter smart-px-2 smart-py-1  smart-d-table-cell smart-align-middle" style="padding-right: 15pxpx" >  
+        <img class="smarthImage smart-d-block smart-mx-auto {{smarthImageClass}}" alt="highlight" src="https://s3.amazonaws.com/files.thalia-apps.com/smart/production/h15323" style="{{smarthImageStyle}} height:30px; width:30px; max-height:30px; max-width:30px;">
+    </div>
+    <div class="smarthText smart-d-table-cell smart-text-left smart-align-middle {{smarthTextClass}}" data-smartproductid='{{product.id}}' style="{{smarthTextStyle}} ">
+        <div class="smarthSubTitle " style="color: rgb(33, 37, 41); white-space: normal; overflow: hidden; font-weight: bold; font-size: 18px; ">
+            {% if lasthstringsubtitle == '' %}
+                100% Vegan
+            {% else %}
+                {{lasthstringsubtitle}}
+            {% endif %}
+        </div>    
+        <div class="smarthTitle " style="white-space: normal; overflow: hidden; font-size: 13px; ">
+            {% if lasthstring == '' %}
+                Animals don't belong in hair/skincare
+            {% else %}
+                {{lasthstring}}
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+
+
+
+                        {% endif %}{% endif %}{% endif %}	
+		{% endif %}
+		{% comment %} End Highlight: 1 {% endcomment %}	
+		
+			
+		{% comment %} Start Highlight: 2 {% endcomment %}
+		{% if smarthHighlightCounter <= smarthMaxDisplayHighlight %}
+			 {% assign isStartbShowHighlight = false %} {% assign smarthProductCollections = "174431961149,76827557933" | split: "," %}{% assign issmarthProductCollectionFound0 = false %}
+						{% for collectionid in smarthProductCollections %}
+							{% assign collectionid2 = collectionid | plus: 0 %}
+							{% for shopifyrealcollection in smarthCollectionIds %}
+								{% if shopifyrealcollection == collectionid2 %}
+									{% assign issmarthProductCollectionFound0 = true %}
+									{% break %}
+								{% endif %}
+							{% endfor %}
+						{% endfor %}{% if product.metafields.smart.myordercount != blank %}
+						{% if product.metafields.smart.myordercount.value.ordercount %}
+							{% assign OrderCount = product.metafields.smart.myordercount.value.ordercount | default: 0 %}
+							{% assign RecentSoldCount = product.metafields.smart.myordercount.value.recentcount | default: 0 %}
+						{% else%}
+							{% assign OrderCount = product.metafields.smart.myordercount.ordercount | default: 0 %}
+							{% assign RecentSoldCount = product.metafields.smart.myordercount.recentcount | default: 0 %}
+						{% endif %}
+					{% else  %} 
+						{% assign OrderCount = product.metafields.smart.ordercount | default: 0 %}
+						{% assign RecentSoldCount = product.metafields.smart.recentcount | default: 0 %}
+					{% endif %}{% if  true == issmarthProductCollectionFound0  %}{% assign isStartbShowHighlight = true %}{% endif %}{% assign smarthUTC 		= "now" | date: "%s" %}
+			{% assign smarthUTC 		= smarthUTC | plus: 0 %}
+			{% assign smarthStartTime = 633891600  %}
+			{% assign smarthEndTime = 2053962000  %}
+			{% if smarthStartTime <= smarthUTC and smarthEndTime >= smarthUTC %}{% if isStartbShowHighlight == true %} 
+				{% assign smarthighlightGroup = '1' %} 
+				{% if smartGroup == smarthighlightGroup %}
+				{% assign smarthHighlightCounter = smarthHighlightCounter | plus: 1 %}{% assign lasthstring = '' %}{% assign lasthstringsubtitle = '' %}<div  class="{{smarthDesktop}} smart-px-0 smart-pb-2 smart-col-md-6 smart-col-sm-6 smart-col-12 {{smarthInnerClass}} smarth-15324     "  data-countryselectedh= '' data-screensizeselectedh= ''  countryrule=1 visitorcountryrule=0 style="  {{smarthInnerStyle}}  " onclick="shlink('','0','15324','1');">
+    <div class="smarthImageOuter smart-px-2 smart-py-1  smart-d-table-cell smart-align-middle" style="padding-right: 15pxpx" >  
+        <img class="smarthImage smart-d-block smart-mx-auto {{smarthImageClass}}" alt="highlight" src="https://s3.amazonaws.com/files.thalia-apps.com/smart/production/h15324" style="{{smarthImageStyle}} height:30px; width:30px; max-height:30px; max-width:30px;">
+    </div>
+    <div class="smarthText smart-d-table-cell smart-text-left smart-align-middle {{smarthTextClass}}" data-smartproductid='{{product.id}}' style="{{smarthTextStyle}} ">
+        <div class="smarthSubTitle " style="color: rgb(33, 37, 41); white-space: normal; overflow: hidden; font-weight: bold; font-size: 18px; ">
+            {% if lasthstringsubtitle == '' %}
+                Hair & Skin
+            {% else %}
+                {{lasthstringsubtitle}}
+            {% endif %}
+        </div>    
+        <div class="smarthTitle " style="white-space: normal; overflow: hidden; font-size: 13px; ">
+            {% if lasthstring == '' %}
+                Hand-crafted for natural hair & skin (safe for colored hair)
+            {% else %}
+                {{lasthstring}}
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+
+
+
+                        {% endif %}{% endif %}{% endif %}	
+		{% endif %}
+		{% comment %} End Highlight: 2 {% endcomment %}	
+		
+			
+		{% comment %} Start Highlight: 3 {% endcomment %}
+		{% if smarthHighlightCounter <= smarthMaxDisplayHighlight %}
+			 {% assign isStartbShowHighlight = false %} {% assign smarthProductCollections = "76827557933" | split: "," %}{% assign issmarthProductCollectionFound0 = false %}
+						{% for collectionid in smarthProductCollections %}
+							{% assign collectionid2 = collectionid | plus: 0 %}
+							{% for shopifyrealcollection in smarthCollectionIds %}
+								{% if shopifyrealcollection == collectionid2 %}
+									{% assign issmarthProductCollectionFound0 = true %}
+									{% break %}
+								{% endif %}
+							{% endfor %}
+						{% endfor %}{% if product.metafields.smart.myordercount != blank %}
+						{% if product.metafields.smart.myordercount.value.ordercount %}
+							{% assign OrderCount = product.metafields.smart.myordercount.value.ordercount | default: 0 %}
+							{% assign RecentSoldCount = product.metafields.smart.myordercount.value.recentcount | default: 0 %}
+						{% else%}
+							{% assign OrderCount = product.metafields.smart.myordercount.ordercount | default: 0 %}
+							{% assign RecentSoldCount = product.metafields.smart.myordercount.recentcount | default: 0 %}
+						{% endif %}
+					{% else  %} 
+						{% assign OrderCount = product.metafields.smart.ordercount | default: 0 %}
+						{% assign RecentSoldCount = product.metafields.smart.recentcount | default: 0 %}
+					{% endif %}{% if  true == issmarthProductCollectionFound0  %}{% assign isStartbShowHighlight = true %}{% endif %}{% assign smarthUTC 		= "now" | date: "%s" %}
+			{% assign smarthUTC 		= smarthUTC | plus: 0 %}
+			{% assign smarthStartTime = 633891600  %}
+			{% assign smarthEndTime = 2053962000  %}
+			{% if smarthStartTime <= smarthUTC and smarthEndTime >= smarthUTC %}{% if isStartbShowHighlight == true %} 
+				{% assign smarthighlightGroup = '1' %} 
+				{% if smartGroup == smarthighlightGroup %}
+				{% assign smarthHighlightCounter = smarthHighlightCounter | plus: 1 %}{% assign lasthstring = '' %}{% assign lasthstringsubtitle = '' %}<div  class="{{smarthDesktop}} smart-px-0 smart-pb-2 smart-col-md-6 smart-col-sm-6 smart-col-12 {{smarthInnerClass}} smarth-15325     " data-tippy-content= 'Tap for deeper dive' data-countryselectedh= '' data-screensizeselectedh= ''  countryrule=1 visitorcountryrule=0 style=" cursor:pointer; {{smarthInnerStyle}}  " onclick="shlink('','2','15325','1');">
+    <div class="smarthImageOuter smart-px-2 smart-py-1  smart-d-table-cell smart-align-middle" style="padding-right: 15pxpx" >  
+        <img class="smarthImage smart-d-block smart-mx-auto {{smarthImageClass}}" alt="highlight" src="https://s3.amazonaws.com/files.thalia-apps.com/smart/production/h15325" style="{{smarthImageStyle}} height:30px; width:30px; max-height:30px; max-width:30px;">
+    </div>
+    <div class="smarthText smart-d-table-cell smart-text-left smart-align-middle {{smarthTextClass}}" data-smartproductid='{{product.id}}' style="{{smarthTextStyle}} ">
+        <div class="smarthSubTitle " style="color: rgb(33, 37, 41); white-space: normal; overflow: hidden; font-weight: bold; font-size: 18px; ">
+            {% if lasthstringsubtitle == '' %}
+                Shampoo Replacement
+            {% else %}
+                {{lasthstringsubtitle}}
+            {% endif %}
+        </div>    
+        <div class="smarthTitle " style="white-space: normal; overflow: hidden; font-size: 13px; ">
+            {% if lasthstring == '' %}
+                Tap icon for more info
+            {% else %}
+                {{lasthstring}}
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+
+
+
+                        {% endif %}{% endif %}{% endif %}	
+		{% endif %}
+		{% comment %} End Highlight: 3 {% endcomment %}	
+		
+			
+		{% comment %} Start Highlight: 4 {% endcomment %}
+		{% if smarthHighlightCounter <= smarthMaxDisplayHighlight %}
+			 {% assign isStartbShowHighlight = false %} {% assign smarthProductCollections = "174431961149" | split: "," %}{% assign issmarthProductCollectionFound0 = false %}
+						{% for collectionid in smarthProductCollections %}
+							{% assign collectionid2 = collectionid | plus: 0 %}
+							{% for shopifyrealcollection in smarthCollectionIds %}
+								{% if shopifyrealcollection == collectionid2 %}
+									{% assign issmarthProductCollectionFound0 = true %}
+									{% break %}
+								{% endif %}
+							{% endfor %}
+						{% endfor %}{% if product.metafields.smart.myordercount != blank %}
+						{% if product.metafields.smart.myordercount.value.ordercount %}
+							{% assign OrderCount = product.metafields.smart.myordercount.value.ordercount | default: 0 %}
+							{% assign RecentSoldCount = product.metafields.smart.myordercount.value.recentcount | default: 0 %}
+						{% else%}
+							{% assign OrderCount = product.metafields.smart.myordercount.ordercount | default: 0 %}
+							{% assign RecentSoldCount = product.metafields.smart.myordercount.recentcount | default: 0 %}
+						{% endif %}
+					{% else  %} 
+						{% assign OrderCount = product.metafields.smart.ordercount | default: 0 %}
+						{% assign RecentSoldCount = product.metafields.smart.recentcount | default: 0 %}
+					{% endif %}{% if  true == issmarthProductCollectionFound0  %}{% assign isStartbShowHighlight = true %}{% endif %}{% assign smarthUTC 		= "now" | date: "%s" %}
+			{% assign smarthUTC 		= smarthUTC | plus: 0 %}
+			{% assign smarthStartTime = 633891600  %}
+			{% assign smarthEndTime = 2053962000  %}
+			{% if smarthStartTime <= smarthUTC and smarthEndTime >= smarthUTC %}{% if isStartbShowHighlight == true %} 
+				{% assign smarthighlightGroup = '1' %} 
+				{% if smartGroup == smarthighlightGroup %}
+				{% assign smarthHighlightCounter = smarthHighlightCounter | plus: 1 %}{% assign lasthstring = '' %}{% assign lasthstringsubtitle = '' %}<div  class="{{smarthDesktop}} smart-px-0 smart-pb-2 smart-col-md-6 smart-col-sm-6 smart-col-12 {{smarthInnerClass}} smarth-15326     " data-tippy-content= 'Tap icon for deeper dive' data-countryselectedh= '' data-screensizeselectedh= ''  countryrule=1 visitorcountryrule=0 style=" cursor:pointer; {{smarthInnerStyle}}  " onclick="shlink('','2','15326','1');">
+    <div class="smarthImageOuter smart-px-2 smart-py-1  smart-d-table-cell smart-align-middle" style="padding-right: 15pxpx" >  
+        <img class="smarthImage smart-d-block smart-mx-auto {{smarthImageClass}}" alt="highlight" src="https://s3.amazonaws.com/files.thalia-apps.com/smart/production/h15326" style="{{smarthImageStyle}} height:30px; width:30px; max-height:30px; max-width:30px;">
+    </div>
+    <div class="smarthText smart-d-table-cell smart-text-left smart-align-middle {{smarthTextClass}}" data-smartproductid='{{product.id}}' style="{{smarthTextStyle}} ">
+        <div class="smarthSubTitle " style="color: rgb(33, 37, 41); white-space: normal; overflow: hidden; font-weight: bold; font-size: 18px; ">
+            {% if lasthstringsubtitle == '' %}
+                Aloe Vera Juice
+            {% else %}
+                {{lasthstringsubtitle}}
+            {% endif %}
+        </div>    
+        <div class="smarthTitle " style="white-space: normal; overflow: hidden; font-size: 13px; ">
+            {% if lasthstring == '' %}
+                Tap icon for aloe juice deep dive
+            {% else %}
+                {{lasthstring}}
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+
+
+
+                        {% endif %}{% endif %}{% endif %}	
+		{% endif %}
+		{% comment %} End Highlight: 4 {% endcomment %}	
+		
+			
+		{% comment %} Start Highlight: 5 {% endcomment %}
+		{% if smarthHighlightCounter <= smarthMaxDisplayHighlight %}
+			 {% assign isStartbShowHighlight = false %} {% assign smarthProductIds = shop.metafields.smarth.highlight_15327 | split: "," %}
+				{% assign issmarthProductFound = false %}
+				{% assign smarthProductId = smarthProduct.id | downcase %}
+				{% if smarthProductIds contains smarthProductId %}
+					{% assign issmarthProductFound = true %}
+				{% endif %}{% if product.metafields.smart.myordercount != blank %}
+						{% if product.metafields.smart.myordercount.value.ordercount %}
+							{% assign OrderCount = product.metafields.smart.myordercount.value.ordercount | default: 0 %}
+							{% assign RecentSoldCount = product.metafields.smart.myordercount.value.recentcount | default: 0 %}
+						{% else%}
+							{% assign OrderCount = product.metafields.smart.myordercount.ordercount | default: 0 %}
+							{% assign RecentSoldCount = product.metafields.smart.myordercount.recentcount | default: 0 %}
+						{% endif %}
+					{% else  %} 
+						{% assign OrderCount = product.metafields.smart.ordercount | default: 0 %}
+						{% assign RecentSoldCount = product.metafields.smart.recentcount | default: 0 %}
+					{% endif %}{% if  true == issmarthProductFound  %}{% assign isStartbShowHighlight = true %}{% endif %}{% assign smarthUTC 		= "now" | date: "%s" %}
+			{% assign smarthUTC 		= smarthUTC | plus: 0 %}
+			{% assign smarthStartTime = 633891600  %}
+			{% assign smarthEndTime = 2053962000  %}
+			{% if smarthStartTime <= smarthUTC and smarthEndTime >= smarthUTC %}{% if isStartbShowHighlight == true %} 
+				{% assign smarthighlightGroup = '1' %} 
+				{% if smartGroup == smarthighlightGroup %}
+				{% assign smarthHighlightCounter = smarthHighlightCounter | plus: 1 %}{% assign lasthstring = '' %}{% assign lasthstringsubtitle = '' %}<div  class="{{smarthDesktop}} smart-px-0 smart-pb-2 smart-col-md-6 smart-col-sm-6 smart-col-12 {{smarthInnerClass}} smarth-15327     "  data-countryselectedh= '' data-screensizeselectedh= ''  countryrule=1 visitorcountryrule=0 style="  {{smarthInnerStyle}}  " onclick="shlink('','0','15327','1');">
+    <div class="smarthImageOuter smart-px-2 smart-py-1  smart-d-table-cell smart-align-middle" style="padding-right: 15pxpx" >  
+        <img class="smarthImage smart-d-block smart-mx-auto {{smarthImageClass}}" alt="highlight" src="https://s3.amazonaws.com/files.thalia-apps.com/smart/production/h15327" style="{{smarthImageStyle}} height:30px; width:30px; max-height:30px; max-width:30px;">
+    </div>
+    <div class="smarthText smart-d-table-cell smart-text-left smart-align-middle {{smarthTextClass}}" data-smartproductid='{{product.id}}' style="{{smarthTextStyle}} ">
+        <div class="smarthSubTitle " style="color: rgb(33, 37, 41); white-space: normal; overflow: hidden; font-weight: bold; font-size: 18px; ">
+            {% if lasthstringsubtitle == '' %}
+                Delicate Skin & Scalps
+            {% else %}
+                {{lasthstringsubtitle}}
+            {% endif %}
+        </div>    
+        <div class="smarthTitle " style="white-space: normal; overflow: hidden; font-size: 13px; ">
+            {% if lasthstring == '' %}
+                Best for delicacy and soothing itchiness
+            {% else %}
+                {{lasthstring}}
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+
+
+
+                        {% endif %}{% endif %}{% endif %}	
+		{% endif %}
+		{% comment %} End Highlight: 5 {% endcomment %}	
+		
+			
+		{% comment %} Start Highlight: 6 {% endcomment %}
+		{% if smarthHighlightCounter <= smarthMaxDisplayHighlight %}
+			 {% assign isStartbShowHighlight = false %} {% assign smarthProductIds = shop.metafields.smarth.highlight_15328 | split: "," %}
+				{% assign issmarthProductFound = false %}
+				{% assign smarthProductId = smarthProduct.id | downcase %}
+				{% if smarthProductIds contains smarthProductId %}
+					{% assign issmarthProductFound = true %}
+				{% endif %}{% if product.metafields.smart.myordercount != blank %}
+						{% if product.metafields.smart.myordercount.value.ordercount %}
+							{% assign OrderCount = product.metafields.smart.myordercount.value.ordercount | default: 0 %}
+							{% assign RecentSoldCount = product.metafields.smart.myordercount.value.recentcount | default: 0 %}
+						{% else%}
+							{% assign OrderCount = product.metafields.smart.myordercount.ordercount | default: 0 %}
+							{% assign RecentSoldCount = product.metafields.smart.myordercount.recentcount | default: 0 %}
+						{% endif %}
+					{% else  %} 
+						{% assign OrderCount = product.metafields.smart.ordercount | default: 0 %}
+						{% assign RecentSoldCount = product.metafields.smart.recentcount | default: 0 %}
+					{% endif %}{% if  true == issmarthProductFound  %}{% assign isStartbShowHighlight = true %}{% endif %}{% assign smarthUTC 		= "now" | date: "%s" %}
+			{% assign smarthUTC 		= smarthUTC | plus: 0 %}
+			{% assign smarthStartTime = 633891600  %}
+			{% assign smarthEndTime = 2053962000  %}
+			{% if smarthStartTime <= smarthUTC and smarthEndTime >= smarthUTC %}{% if isStartbShowHighlight == true %} 
+				{% assign smarthighlightGroup = '1' %} 
+				{% if smartGroup == smarthighlightGroup %}
+				{% assign smarthHighlightCounter = smarthHighlightCounter | plus: 1 %}{% assign lasthstring = '' %}{% assign lasthstringsubtitle = '' %}<div  class="{{smarthDesktop}} smart-px-0 smart-pb-2 smart-col-md-6 smart-col-sm-6 smart-col-12 {{smarthInnerClass}} smarth-15328     " data-tippy-content= 'This is not a medicinal product, but a natural solution to help' data-countryselectedh= '' data-screensizeselectedh= ''  countryrule=1 visitorcountryrule=0 style="  {{smarthInnerStyle}}  " onclick="shlink('','0','15328','1');">
+    <div class="smarthImageOuter smart-px-2 smart-py-1  smart-d-table-cell smart-align-middle" style="padding-right: 15pxpx" >  
+        <img class="smarthImage smart-d-block smart-mx-auto {{smarthImageClass}}" alt="highlight" src="https://s3.amazonaws.com/files.thalia-apps.com/smart/production/h15328" style="{{smarthImageStyle}} height:30px; width:30px; max-height:30px; max-width:30px;">
+    </div>
+    <div class="smarthText smart-d-table-cell smart-text-left smart-align-middle {{smarthTextClass}}" data-smartproductid='{{product.id}}' style="{{smarthTextStyle}} ">
+        <div class="smarthSubTitle " style="color: rgb(33, 37, 41); white-space: normal; overflow: hidden; font-weight: bold; font-size: 18px; ">
+            {% if lasthstringsubtitle == '' %}
+                Flakes & Dandruff
+            {% else %}
+                {{lasthstringsubtitle}}
+            {% endif %}
+        </div>    
+        <div class="smarthTitle " style="white-space: normal; overflow: hidden; font-size: 13px; ">
+            {% if lasthstring == '' %}
+                Best mist to help combat dandruff
+            {% else %}
+                {{lasthstring}}
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+
+
+
+                        {% endif %}{% endif %}{% endif %}	
+		{% endif %}
+		{% comment %} End Highlight: 6 {% endcomment %}	
+		
+			
+		{% comment %} Start Highlight: 7 {% endcomment %}
+		{% if smarthHighlightCounter <= smarthMaxDisplayHighlight %}
+			 {% assign isStartbShowHighlight = false %} {% assign smarthProductIds = shop.metafields.smarth.highlight_15329 | split: "," %}
+				{% assign issmarthProductFound = false %}
+				{% assign smarthProductId = smarthProduct.id | downcase %}
+				{% if smarthProductIds contains smarthProductId %}
+					{% assign issmarthProductFound = true %}
+				{% endif %}{% if product.metafields.smart.myordercount != blank %}
+						{% if product.metafields.smart.myordercount.value.ordercount %}
+							{% assign OrderCount = product.metafields.smart.myordercount.value.ordercount | default: 0 %}
+							{% assign RecentSoldCount = product.metafields.smart.myordercount.value.recentcount | default: 0 %}
+						{% else%}
+							{% assign OrderCount = product.metafields.smart.myordercount.ordercount | default: 0 %}
+							{% assign RecentSoldCount = product.metafields.smart.myordercount.recentcount | default: 0 %}
+						{% endif %}
+					{% else  %} 
+						{% assign OrderCount = product.metafields.smart.ordercount | default: 0 %}
+						{% assign RecentSoldCount = product.metafields.smart.recentcount | default: 0 %}
+					{% endif %}{% if  true == issmarthProductFound  %}{% assign isStartbShowHighlight = true %}{% endif %}{% assign smarthUTC 		= "now" | date: "%s" %}
+			{% assign smarthUTC 		= smarthUTC | plus: 0 %}
+			{% assign smarthStartTime = 633891600  %}
+			{% assign smarthEndTime = 2053962000  %}
+			{% if smarthStartTime <= smarthUTC and smarthEndTime >= smarthUTC %}{% if isStartbShowHighlight == true %} 
+				{% assign smarthighlightGroup = '1' %} 
+				{% if smartGroup == smarthighlightGroup %}
+				{% assign smarthHighlightCounter = smarthHighlightCounter | plus: 1 %}{% assign lasthstring = '' %}{% assign lasthstringsubtitle = '' %}<div  class="{{smarthDesktop}} smart-px-0 smart-pb-2 smart-col-md-6 smart-col-sm-6 smart-col-12 {{smarthInnerClass}} smarth-15329     "  data-countryselectedh= '' data-screensizeselectedh= ''  countryrule=1 visitorcountryrule=0 style="  {{smarthInnerStyle}}  " onclick="shlink('','0','15329','1');">
+    <div class="smarthImageOuter smart-px-2 smart-py-1  smart-d-table-cell smart-align-middle" style="padding-right: 15pxpx" >  
+        <img class="smarthImage smart-d-block smart-mx-auto {{smarthImageClass}}" alt="highlight" src="https://s3.amazonaws.com/files.thalia-apps.com/smart/production/h15329" style="{{smarthImageStyle}} height:30px; width:30px; max-height:30px; max-width:30px;">
+    </div>
+    <div class="smarthText smart-d-table-cell smart-text-left smart-align-middle {{smarthTextClass}}" data-smartproductid='{{product.id}}' style="{{smarthTextStyle}} ">
+        <div class="smarthSubTitle " style="color: rgb(33, 37, 41); white-space: normal; overflow: hidden; font-weight: bold; font-size: 18px; ">
+            {% if lasthstringsubtitle == '' %}
+                Odor Eliminator
+            {% else %}
+                {{lasthstringsubtitle}}
+            {% endif %}
+        </div>    
+        <div class="smarthTitle " style="white-space: normal; overflow: hidden; font-size: 13px; ">
+            {% if lasthstring == '' %}
+                Fights odors, doesn't just mask them
+            {% else %}
+                {{lasthstring}}
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+
+
+
+                        {% endif %}{% endif %}{% endif %}	
+		{% endif %}
+		{% comment %} End Highlight: 7 {% endcomment %}	
+		
+			
+		{% comment %} Start Highlight: 8 {% endcomment %}
+		{% if smarthHighlightCounter <= smarthMaxDisplayHighlight %}
+			 {% assign isStartbShowHighlight = false %} {% assign smarthProductIds = shop.metafields.smarth.highlight_15330 | split: "," %}
+				{% assign issmarthProductFound = false %}
+				{% assign smarthProductId = smarthProduct.id | downcase %}
+				{% if smarthProductIds contains smarthProductId %}
+					{% assign issmarthProductFound = true %}
+				{% endif %}{% if product.metafields.smart.myordercount != blank %}
+						{% if product.metafields.smart.myordercount.value.ordercount %}
+							{% assign OrderCount = product.metafields.smart.myordercount.value.ordercount | default: 0 %}
+							{% assign RecentSoldCount = product.metafields.smart.myordercount.value.recentcount | default: 0 %}
+						{% else%}
+							{% assign OrderCount = product.metafields.smart.myordercount.ordercount | default: 0 %}
+							{% assign RecentSoldCount = product.metafields.smart.myordercount.recentcount | default: 0 %}
+						{% endif %}
+					{% else  %} 
+						{% assign OrderCount = product.metafields.smart.ordercount | default: 0 %}
+						{% assign RecentSoldCount = product.metafields.smart.recentcount | default: 0 %}
+					{% endif %}{% if  true == issmarthProductFound  %}{% assign isStartbShowHighlight = true %}{% endif %}{% assign smarthUTC 		= "now" | date: "%s" %}
+			{% assign smarthUTC 		= smarthUTC | plus: 0 %}
+			{% assign smarthStartTime = 633891600  %}
+			{% assign smarthEndTime = 2053962000  %}
+			{% if smarthStartTime <= smarthUTC and smarthEndTime >= smarthUTC %}{% if isStartbShowHighlight == true %} 
+				{% assign smarthighlightGroup = '1' %} 
+				{% if smartGroup == smarthighlightGroup %}
+				{% assign smarthHighlightCounter = smarthHighlightCounter | plus: 1 %}{% assign lasthstring = '' %}{% assign lasthstringsubtitle = '' %}<div  class="{{smarthDesktop}} smart-px-0 smart-pb-2 smart-col-md-6 smart-col-sm-6 smart-col-12 {{smarthInnerClass}} smarth-15330     " data-tippy-content= 'All our mists do, but this does it the best :)' data-countryselectedh= '' data-screensizeselectedh= ''  countryrule=1 visitorcountryrule=0 style="  {{smarthInnerStyle}}  " onclick="shlink('','0','15330','1');">
+    <div class="smarthImageOuter smart-px-2 smart-py-1  smart-d-table-cell smart-align-middle" style="padding-right: 15pxpx" >  
+        <img class="smarthImage smart-d-block smart-mx-auto {{smarthImageClass}}" alt="highlight" src="https://s3.amazonaws.com/files.thalia-apps.com/smart/production/h15330" style="{{smarthImageStyle}} height:30px; width:30px; max-height:30px; max-width:30px;">
+    </div>
+    <div class="smarthText smart-d-table-cell smart-text-left smart-align-middle {{smarthTextClass}}" data-smartproductid='{{product.id}}' style="{{smarthTextStyle}} ">
+        <div class="smarthSubTitle " style="color: rgb(33, 37, 41); white-space: normal; overflow: hidden; font-weight: bold; font-size: 18px; ">
+            {% if lasthstringsubtitle == '' %}
+                Promotes Growth
+            {% else %}
+                {{lasthstringsubtitle}}
+            {% endif %}
+        </div>    
+        <div class="smarthTitle " style="white-space: normal; overflow: hidden; font-size: 13px; ">
+            {% if lasthstring == '' %}
+                Lemon Herb's superpower
+            {% else %}
+                {{lasthstring}}
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+
+
+
+                        {% endif %}{% endif %}{% endif %}	
+		{% endif %}
+		{% comment %} End Highlight: 8 {% endcomment %}	
+		
+			
+		{% comment %} Start Highlight: 9 {% endcomment %}
+		{% if smarthHighlightCounter <= smarthMaxDisplayHighlight %}
+			 {% assign isStartbShowHighlight = false %} {% assign smarthProductIds = shop.metafields.smarth.highlight_15331 | split: "," %}
+				{% assign issmarthProductFound = false %}
+				{% assign smarthProductId = smarthProduct.id | downcase %}
+				{% if smarthProductIds contains smarthProductId %}
+					{% assign issmarthProductFound = true %}
+				{% endif %}{% if product.metafields.smart.myordercount != blank %}
+						{% if product.metafields.smart.myordercount.value.ordercount %}
+							{% assign OrderCount = product.metafields.smart.myordercount.value.ordercount | default: 0 %}
+							{% assign RecentSoldCount = product.metafields.smart.myordercount.value.recentcount | default: 0 %}
+						{% else%}
+							{% assign OrderCount = product.metafields.smart.myordercount.ordercount | default: 0 %}
+							{% assign RecentSoldCount = product.metafields.smart.myordercount.recentcount | default: 0 %}
+						{% endif %}
+					{% else  %} 
+						{% assign OrderCount = product.metafields.smart.ordercount | default: 0 %}
+						{% assign RecentSoldCount = product.metafields.smart.recentcount | default: 0 %}
+					{% endif %}{% if  true == issmarthProductFound  %}{% assign isStartbShowHighlight = true %}{% endif %}{% assign smarthUTC 		= "now" | date: "%s" %}
+			{% assign smarthUTC 		= smarthUTC | plus: 0 %}
+			{% assign smarthStartTime = 633891600  %}
+			{% assign smarthEndTime = 2053962000  %}
+			{% if smarthStartTime <= smarthUTC and smarthEndTime >= smarthUTC %}{% if isStartbShowHighlight == true %} 
+				{% assign smarthighlightGroup = '1' %} 
+				{% if smartGroup == smarthighlightGroup %}
+				{% assign smarthHighlightCounter = smarthHighlightCounter | plus: 1 %}{% assign lasthstring = '' %}{% assign lasthstringsubtitle = '' %}<div  class="{{smarthDesktop}} smart-px-0 smart-pb-2 smart-col-md-6 smart-col-sm-6 smart-col-12 {{smarthInnerClass}} smarth-15331     "  data-countryselectedh= '' data-screensizeselectedh= ''  countryrule=1 visitorcountryrule=0 style="  {{smarthInnerStyle}}  " onclick="shlink('','0','15331','1');">
+    <div class="smarthImageOuter smart-px-2 smart-py-1  smart-d-table-cell smart-align-middle" style="padding-right: 15pxpx" >  
+        <img class="smarthImage smart-d-block smart-mx-auto {{smarthImageClass}}" alt="highlight" src="https://s3.amazonaws.com/files.thalia-apps.com/smart/production/h15331" style="{{smarthImageStyle}} height:30px; width:30px; max-height:30px; max-width:30px;">
+    </div>
+    <div class="smarthText smart-d-table-cell smart-text-left smart-align-middle {{smarthTextClass}}" data-smartproductid='{{product.id}}' style="{{smarthTextStyle}} ">
+        <div class="smarthSubTitle " style="color: rgb(33, 37, 41); white-space: normal; overflow: hidden; font-weight: bold; font-size: 18px; ">
+            {% if lasthstringsubtitle == '' %}
+                Itchiness & Acne
+            {% else %}
+                {{lasthstringsubtitle}}
+            {% endif %}
+        </div>    
+        <div class="smarthTitle " style="white-space: normal; overflow: hidden; font-size: 13px; ">
+            {% if lasthstring == '' %}
+                Very effective for both!
+            {% else %}
+                {{lasthstring}}
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+
+
+
+                        {% endif %}{% endif %}{% endif %}	
+		{% endif %}
+		{% comment %} End Highlight: 9 {% endcomment %}	
+		
+			
+		{% comment %} Start Highlight: 10 {% endcomment %}
+		{% if smarthHighlightCounter <= smarthMaxDisplayHighlight %}
+			 {% assign isStartbShowHighlight = false %} {% assign smarthProductIds = shop.metafields.smarth.highlight_15332 | split: "," %}
+				{% assign issmarthProductFound = false %}
+				{% assign smarthProductId = smarthProduct.id | downcase %}
+				{% if smarthProductIds contains smarthProductId %}
+					{% assign issmarthProductFound = true %}
+				{% endif %}{% if product.metafields.smart.myordercount != blank %}
+						{% if product.metafields.smart.myordercount.value.ordercount %}
+							{% assign OrderCount = product.metafields.smart.myordercount.value.ordercount | default: 0 %}
+							{% assign RecentSoldCount = product.metafields.smart.myordercount.value.recentcount | default: 0 %}
+						{% else%}
+							{% assign OrderCount = product.metafields.smart.myordercount.ordercount | default: 0 %}
+							{% assign RecentSoldCount = product.metafields.smart.myordercount.recentcount | default: 0 %}
+						{% endif %}
+					{% else  %} 
+						{% assign OrderCount = product.metafields.smart.ordercount | default: 0 %}
+						{% assign RecentSoldCount = product.metafields.smart.recentcount | default: 0 %}
+					{% endif %}{% if  true == issmarthProductFound  %}{% assign isStartbShowHighlight = true %}{% endif %}{% assign smarthUTC 		= "now" | date: "%s" %}
+			{% assign smarthUTC 		= smarthUTC | plus: 0 %}
+			{% assign smarthStartTime = 633891600  %}
+			{% assign smarthEndTime = 2053962000  %}
+			{% if smarthStartTime <= smarthUTC and smarthEndTime >= smarthUTC %}{% if isStartbShowHighlight == true %} 
+				{% assign smarthighlightGroup = '1' %} 
+				{% if smartGroup == smarthighlightGroup %}
+				{% assign smarthHighlightCounter = smarthHighlightCounter | plus: 1 %}{% assign lasthstring = '' %}{% assign lasthstringsubtitle = '' %}<div  class="{{smarthDesktop}} smart-px-0 smart-pb-2 smart-col-md-6 smart-col-sm-6 smart-col-12 {{smarthInnerClass}} smarth-15332     "  data-countryselectedh= '' data-screensizeselectedh= ''  countryrule=1 visitorcountryrule=0 style="  {{smarthInnerStyle}}  " onclick="shlink('','0','15332','1');">
+    <div class="smarthImageOuter smart-px-2 smart-py-1  smart-d-table-cell smart-align-middle" style="padding-right: 15pxpx" >  
+        <img class="smarthImage smart-d-block smart-mx-auto {{smarthImageClass}}" alt="highlight" src="https://s3.amazonaws.com/files.thalia-apps.com/smart/production/h15332" style="{{smarthImageStyle}} height:30px; width:30px; max-height:30px; max-width:30px;">
+    </div>
+    <div class="smarthText smart-d-table-cell smart-text-left smart-align-middle {{smarthTextClass}}" data-smartproductid='{{product.id}}' style="{{smarthTextStyle}} ">
+        <div class="smarthSubTitle " style="color: rgb(33, 37, 41); white-space: normal; overflow: hidden; font-weight: bold; font-size: 18px; ">
+            {% if lasthstringsubtitle == '' %}
+                Growth!
+            {% else %}
+                {{lasthstringsubtitle}}
+            {% endif %}
+        </div>    
+        <div class="smarthTitle " style="white-space: normal; overflow: hidden; font-size: 13px; ">
+            {% if lasthstring == '' %}
+                Best bar for promoting hair growth
+            {% else %}
+                {{lasthstring}}
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+
+
+
+                        {% endif %}{% endif %}{% endif %}	
+		{% endif %}
+		{% comment %} End Highlight: 10 {% endcomment %}	
+		
+			
+		{% comment %} Start Highlight: 11 {% endcomment %}
+		{% if smarthHighlightCounter <= smarthMaxDisplayHighlight %}
+			 {% assign isStartbShowHighlight = false %} {% assign smarthProductIds = shop.metafields.smarth.highlight_15333 | split: "," %}
+				{% assign issmarthProductFound = false %}
+				{% assign smarthProductId = smarthProduct.id | downcase %}
+				{% if smarthProductIds contains smarthProductId %}
+					{% assign issmarthProductFound = true %}
+				{% endif %}{% if product.metafields.smart.myordercount != blank %}
+						{% if product.metafields.smart.myordercount.value.ordercount %}
+							{% assign OrderCount = product.metafields.smart.myordercount.value.ordercount | default: 0 %}
+							{% assign RecentSoldCount = product.metafields.smart.myordercount.value.recentcount | default: 0 %}
+						{% else%}
+							{% assign OrderCount = product.metafields.smart.myordercount.ordercount | default: 0 %}
+							{% assign RecentSoldCount = product.metafields.smart.myordercount.recentcount | default: 0 %}
+						{% endif %}
+					{% else  %} 
+						{% assign OrderCount = product.metafields.smart.ordercount | default: 0 %}
+						{% assign RecentSoldCount = product.metafields.smart.recentcount | default: 0 %}
+					{% endif %}{% if  true == issmarthProductFound  %}{% assign isStartbShowHighlight = true %}{% endif %}{% assign smarthUTC 		= "now" | date: "%s" %}
+			{% assign smarthUTC 		= smarthUTC | plus: 0 %}
+			{% assign smarthStartTime = 633891600  %}
+			{% assign smarthEndTime = 2053962000  %}
+			{% if smarthStartTime <= smarthUTC and smarthEndTime >= smarthUTC %}{% if isStartbShowHighlight == true %} 
+				{% assign smarthighlightGroup = '1' %} 
+				{% if smartGroup == smarthighlightGroup %}
+				{% assign smarthHighlightCounter = smarthHighlightCounter | plus: 1 %}{% assign lasthstring = '' %}{% assign lasthstringsubtitle = '' %}<div  class="{{smarthDesktop}} smart-px-0 smart-pb-2 smart-col-md-6 smart-col-sm-6 smart-col-12 {{smarthInnerClass}} smarth-15333     "  data-countryselectedh= '' data-screensizeselectedh= ''  countryrule=1 visitorcountryrule=0 style="  {{smarthInnerStyle}}  " onclick="shlink('','0','15333','1');">
+    <div class="smarthImageOuter smart-px-2 smart-py-1  smart-d-table-cell smart-align-middle" style="padding-right: 15pxpx" >  
+        <img class="smarthImage smart-d-block smart-mx-auto {{smarthImageClass}}" alt="highlight" src="https://s3.amazonaws.com/files.thalia-apps.com/smart/production/h15333" style="{{smarthImageStyle}} height:30px; width:30px; max-height:30px; max-width:30px;">
+    </div>
+    <div class="smarthText smart-d-table-cell smart-text-left smart-align-middle {{smarthTextClass}}" data-smartproductid='{{product.id}}' style="{{smarthTextStyle}} ">
+        <div class="smarthSubTitle " style="color: rgb(33, 37, 41); white-space: normal; overflow: hidden; font-weight: bold; font-size: 18px; ">
+            {% if lasthstringsubtitle == '' %}
+                Odor Fighter
+            {% else %}
+                {{lasthstringsubtitle}}
+            {% endif %}
+        </div>    
+        <div class="smarthTitle " style="white-space: normal; overflow: hidden; font-size: 13px; ">
+            {% if lasthstring == '' %}
+                By the scent alone you know what's up
+            {% else %}
+                {{lasthstring}}
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+
+
+
+                        {% endif %}{% endif %}{% endif %}	
+		{% endif %}
+		{% comment %} End Highlight: 11 {% endcomment %}	
+		
+			
+		{% comment %} Start Highlight: 12 {% endcomment %}
+		{% if smarthHighlightCounter <= smarthMaxDisplayHighlight %}
+			 {% assign isStartbShowHighlight = false %} {% assign smarthProductIds = shop.metafields.smarth.highlight_15334 | split: "," %}
+				{% assign issmarthProductFound = false %}
+				{% assign smarthProductId = smarthProduct.id | downcase %}
+				{% if smarthProductIds contains smarthProductId %}
+					{% assign issmarthProductFound = true %}
+				{% endif %}{% if product.metafields.smart.myordercount != blank %}
+						{% if product.metafields.smart.myordercount.value.ordercount %}
+							{% assign OrderCount = product.metafields.smart.myordercount.value.ordercount | default: 0 %}
+							{% assign RecentSoldCount = product.metafields.smart.myordercount.value.recentcount | default: 0 %}
+						{% else%}
+							{% assign OrderCount = product.metafields.smart.myordercount.ordercount | default: 0 %}
+							{% assign RecentSoldCount = product.metafields.smart.myordercount.recentcount | default: 0 %}
+						{% endif %}
+					{% else  %} 
+						{% assign OrderCount = product.metafields.smart.ordercount | default: 0 %}
+						{% assign RecentSoldCount = product.metafields.smart.recentcount | default: 0 %}
+					{% endif %}{% if  true == issmarthProductFound  %}{% assign isStartbShowHighlight = true %}{% endif %}{% assign smarthUTC 		= "now" | date: "%s" %}
+			{% assign smarthUTC 		= smarthUTC | plus: 0 %}
+			{% assign smarthStartTime = 633891600  %}
+			{% assign smarthEndTime = 2053962000  %}
+			{% if smarthStartTime <= smarthUTC and smarthEndTime >= smarthUTC %}{% if isStartbShowHighlight == true %} 
+				{% assign smarthighlightGroup = '1' %} 
+				{% if smartGroup == smarthighlightGroup %}
+				{% assign smarthHighlightCounter = smarthHighlightCounter | plus: 1 %}{% assign lasthstring = '' %}{% assign lasthstringsubtitle = '' %}<div  class="{{smarthDesktop}} smart-px-0 smart-pb-2 smart-col-md-6 smart-col-sm-6 smart-col-12 {{smarthInnerClass}} smarth-15334     "  data-countryselectedh= '' data-screensizeselectedh= ''  countryrule=1 visitorcountryrule=0 style="  {{smarthInnerStyle}}  " onclick="shlink('','0','15334','1');">
+    <div class="smarthImageOuter smart-px-2 smart-py-1  smart-d-table-cell smart-align-middle" style="padding-right: 15pxpx" >  
+        <img class="smarthImage smart-d-block smart-mx-auto {{smarthImageClass}}" alt="highlight" src="https://s3.amazonaws.com/files.thalia-apps.com/smart/production/h15334" style="{{smarthImageStyle}} height:30px; width:30px; max-height:30px; max-width:30px;">
+    </div>
+    <div class="smarthText smart-d-table-cell smart-text-left smart-align-middle {{smarthTextClass}}" data-smartproductid='{{product.id}}' style="{{smarthTextStyle}} ">
+        <div class="smarthSubTitle " style="color: rgb(33, 37, 41); white-space: normal; overflow: hidden; font-weight: bold; font-size: 18px; ">
+            {% if lasthstringsubtitle == '' %}
+                Provides DEEPEST Cleanse
+            {% else %}
+                {{lasthstringsubtitle}}
+            {% endif %}
+        </div>    
+        <div class="smarthTitle " style="white-space: normal; overflow: hidden; font-size: 13px; ">
+            {% if lasthstring == '' %}
+                All of ours bars do, but this does it the best
+            {% else %}
+                {{lasthstring}}
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+
+
+
+                        {% endif %}{% endif %}{% endif %}	
+		{% endif %}
+		{% comment %} End Highlight: 12 {% endcomment %}	
+		
+			
+		{% comment %} Start Highlight: 13 {% endcomment %}
+		{% if smarthHighlightCounter <= smarthMaxDisplayHighlight %}
+			 {% assign isStartbShowHighlight = false %} {% assign smarthProductIds = shop.metafields.smarth.highlight_15335 | split: "," %}
+				{% assign issmarthProductFound = false %}
+				{% assign smarthProductId = smarthProduct.id | downcase %}
+				{% if smarthProductIds contains smarthProductId %}
+					{% assign issmarthProductFound = true %}
+				{% endif %}{% if product.metafields.smart.myordercount != blank %}
+						{% if product.metafields.smart.myordercount.value.ordercount %}
+							{% assign OrderCount = product.metafields.smart.myordercount.value.ordercount | default: 0 %}
+							{% assign RecentSoldCount = product.metafields.smart.myordercount.value.recentcount | default: 0 %}
+						{% else%}
+							{% assign OrderCount = product.metafields.smart.myordercount.ordercount | default: 0 %}
+							{% assign RecentSoldCount = product.metafields.smart.myordercount.recentcount | default: 0 %}
+						{% endif %}
+					{% else  %} 
+						{% assign OrderCount = product.metafields.smart.ordercount | default: 0 %}
+						{% assign RecentSoldCount = product.metafields.smart.recentcount | default: 0 %}
+					{% endif %}{% if  true == issmarthProductFound  %}{% assign isStartbShowHighlight = true %}{% endif %}{% assign smarthUTC 		= "now" | date: "%s" %}
+			{% assign smarthUTC 		= smarthUTC | plus: 0 %}
+			{% assign smarthStartTime = 633891600  %}
+			{% assign smarthEndTime = 2053962000  %}
+			{% if smarthStartTime <= smarthUTC and smarthEndTime >= smarthUTC %}{% if isStartbShowHighlight == true %} 
+				{% assign smarthighlightGroup = '1' %} 
+				{% if smartGroup == smarthighlightGroup %}
+				{% assign smarthHighlightCounter = smarthHighlightCounter | plus: 1 %}{% assign lasthstring = '' %}{% assign lasthstringsubtitle = '' %}<div  class="{{smarthDesktop}} smart-px-0 smart-pb-2 smart-col-md-6 smart-col-sm-6 smart-col-12 {{smarthInnerClass}} smarth-15335     "  data-countryselectedh= '' data-screensizeselectedh= ''  countryrule=1 visitorcountryrule=0 style="  {{smarthInnerStyle}}  " onclick="shlink('','0','15335','1');">
+    <div class="smarthImageOuter smart-px-2 smart-py-1  smart-d-table-cell smart-align-middle" style="padding-right: 15pxpx" >  
+        <img class="smarthImage smart-d-block smart-mx-auto {{smarthImageClass}}" alt="highlight" src="https://s3.amazonaws.com/files.thalia-apps.com/smart/production/h15335" style="{{smarthImageStyle}} height:30px; width:30px; max-height:30px; max-width:30px;">
+    </div>
+    <div class="smarthText smart-d-table-cell smart-text-left smart-align-middle {{smarthTextClass}}" data-smartproductid='{{product.id}}' style="{{smarthTextStyle}} ">
+        <div class="smarthSubTitle " style="color: rgb(33, 37, 41); white-space: normal; overflow: hidden; font-weight: bold; font-size: 18px; ">
+            {% if lasthstringsubtitle == '' %}
+                Soothes Scalp & Skin
+            {% else %}
+                {{lasthstringsubtitle}}
+            {% endif %}
+        </div>    
+        <div class="smarthTitle " style="white-space: normal; overflow: hidden; font-size: 13px; ">
+            {% if lasthstring == '' %}
+                Calms irritations & inflammation
+            {% else %}
+                {{lasthstring}}
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+
+
+
+                        {% endif %}{% endif %}{% endif %}	
+		{% endif %}
+		{% comment %} End Highlight: 13 {% endcomment %}	
+		
+			
+		{% comment %} Start Highlight: 14 {% endcomment %}
+		{% if smarthHighlightCounter <= smarthMaxDisplayHighlight %}
+			 {% assign isStartbShowHighlight = false %} {% assign smarthProductIds = shop.metafields.smarth.highlight_15336 | split: "," %}
+				{% assign issmarthProductFound = false %}
+				{% assign smarthProductId = smarthProduct.id | downcase %}
+				{% if smarthProductIds contains smarthProductId %}
+					{% assign issmarthProductFound = true %}
+				{% endif %}{% if product.metafields.smart.myordercount != blank %}
+						{% if product.metafields.smart.myordercount.value.ordercount %}
+							{% assign OrderCount = product.metafields.smart.myordercount.value.ordercount | default: 0 %}
+							{% assign RecentSoldCount = product.metafields.smart.myordercount.value.recentcount | default: 0 %}
+						{% else%}
+							{% assign OrderCount = product.metafields.smart.myordercount.ordercount | default: 0 %}
+							{% assign RecentSoldCount = product.metafields.smart.myordercount.recentcount | default: 0 %}
+						{% endif %}
+					{% else  %} 
+						{% assign OrderCount = product.metafields.smart.ordercount | default: 0 %}
+						{% assign RecentSoldCount = product.metafields.smart.recentcount | default: 0 %}
+					{% endif %}{% if  true == issmarthProductFound  %}{% assign isStartbShowHighlight = true %}{% endif %}{% assign smarthUTC 		= "now" | date: "%s" %}
+			{% assign smarthUTC 		= smarthUTC | plus: 0 %}
+			{% assign smarthStartTime = 633891600  %}
+			{% assign smarthEndTime = 2053962000  %}
+			{% if smarthStartTime <= smarthUTC and smarthEndTime >= smarthUTC %}{% if isStartbShowHighlight == true %} 
+				{% assign smarthighlightGroup = '1' %} 
+				{% if smartGroup == smarthighlightGroup %}
+				{% assign smarthHighlightCounter = smarthHighlightCounter | plus: 1 %}{% assign lasthstring = '' %}{% assign lasthstringsubtitle = '' %}<div  class="{{smarthDesktop}} smart-px-0 smart-pb-2 smart-col-md-6 smart-col-sm-6 smart-col-12 {{smarthInnerClass}} smarth-15336     "  data-countryselectedh= '' data-screensizeselectedh= ''  countryrule=1 visitorcountryrule=0 style="  {{smarthInnerStyle}}  " onclick="shlink('','0','15336','1');">
+    <div class="smarthImageOuter smart-px-2 smart-py-1  smart-d-table-cell smart-align-middle" style="padding-right: 15pxpx" >  
+        <img class="smarthImage smart-d-block smart-mx-auto {{smarthImageClass}}" alt="highlight" src="https://s3.amazonaws.com/files.thalia-apps.com/smart/production/h15336" style="{{smarthImageStyle}} height:30px; width:30px; max-height:30px; max-width:30px;">
+    </div>
+    <div class="smarthText smart-d-table-cell smart-text-left smart-align-middle {{smarthTextClass}}" data-smartproductid='{{product.id}}' style="{{smarthTextStyle}} ">
+        <div class="smarthSubTitle " style="color: rgb(33, 37, 41); white-space: normal; overflow: hidden; font-weight: bold; font-size: 18px; ">
+            {% if lasthstringsubtitle == '' %}
+                Gentle
+            {% else %}
+                {{lasthstringsubtitle}}
+            {% endif %}
+        </div>    
+        <div class="smarthTitle " style="white-space: normal; overflow: hidden; font-size: 13px; ">
+            {% if lasthstring == '' %}
+                No essential oils
+            {% else %}
+                {{lasthstring}}
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+
+
+
+                        {% endif %}{% endif %}{% endif %}	
+		{% endif %}
+		{% comment %} End Highlight: 14 {% endcomment %}	
+		
+			
+		{% comment %} Start Highlight: 15 {% endcomment %}
+		{% if smarthHighlightCounter <= smarthMaxDisplayHighlight %}
+			 {% assign isStartbShowHighlight = false %} {% assign smarthProductIds = shop.metafields.smarth.highlight_15337 | split: "," %}
+				{% assign issmarthProductFound = false %}
+				{% assign smarthProductId = smarthProduct.id | downcase %}
+				{% if smarthProductIds contains smarthProductId %}
+					{% assign issmarthProductFound = true %}
+				{% endif %}{% if product.metafields.smart.myordercount != blank %}
+						{% if product.metafields.smart.myordercount.value.ordercount %}
+							{% assign OrderCount = product.metafields.smart.myordercount.value.ordercount | default: 0 %}
+							{% assign RecentSoldCount = product.metafields.smart.myordercount.value.recentcount | default: 0 %}
+						{% else%}
+							{% assign OrderCount = product.metafields.smart.myordercount.ordercount | default: 0 %}
+							{% assign RecentSoldCount = product.metafields.smart.myordercount.recentcount | default: 0 %}
+						{% endif %}
+					{% else  %} 
+						{% assign OrderCount = product.metafields.smart.ordercount | default: 0 %}
+						{% assign RecentSoldCount = product.metafields.smart.recentcount | default: 0 %}
+					{% endif %}{% if  true == issmarthProductFound  %}{% assign isStartbShowHighlight = true %}{% endif %}{% assign smarthUTC 		= "now" | date: "%s" %}
+			{% assign smarthUTC 		= smarthUTC | plus: 0 %}
+			{% assign smarthStartTime = 633891600  %}
+			{% assign smarthEndTime = 2053962000  %}
+			{% if smarthStartTime <= smarthUTC and smarthEndTime >= smarthUTC %}{% if isStartbShowHighlight == true %} 
+				{% assign smarthighlightGroup = '1' %} 
+				{% if smartGroup == smarthighlightGroup %}
+				{% assign smarthHighlightCounter = smarthHighlightCounter | plus: 1 %}{% assign lasthstring = '' %}{% assign lasthstringsubtitle = '' %}<div  class="{{smarthDesktop}} smart-px-0 smart-pb-2 smart-col-md-6 smart-col-sm-6 smart-col-12 {{smarthInnerClass}} smarth-15337     "  data-countryselectedh= '' data-screensizeselectedh= ''  countryrule=1 visitorcountryrule=0 style="  {{smarthInnerStyle}}  " onclick="shlink('','0','15337','1');">
+    <div class="smarthImageOuter smart-px-2 smart-py-1  smart-d-table-cell smart-align-middle" style="padding-right: 15pxpx" >  
+        <img class="smarthImage smart-d-block smart-mx-auto {{smarthImageClass}}" alt="highlight" src="https://s3.amazonaws.com/files.thalia-apps.com/smart/production/h15337" style="{{smarthImageStyle}} height:30px; width:30px; max-height:30px; max-width:30px;">
+    </div>
+    <div class="smarthText smart-d-table-cell smart-text-left smart-align-middle {{smarthTextClass}}" data-smartproductid='{{product.id}}' style="{{smarthTextStyle}} ">
+        <div class="smarthSubTitle " style="color: rgb(33, 37, 41); white-space: normal; overflow: hidden; font-weight: bold; font-size: 18px; ">
+            {% if lasthstringsubtitle == '' %}
+                Sample Size
+            {% else %}
+                {{lasthstringsubtitle}}
+            {% endif %}
+        </div>    
+        <div class="smarthTitle " style="white-space: normal; overflow: hidden; font-size: 13px; ">
+            {% if lasthstring == '' %}
+                1/3 the size of a full bar (sometimes more)
+            {% else %}
+                {{lasthstring}}
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+
+
+
+                        {% endif %}{% endif %}{% endif %}	
+		{% endif %}
+		{% comment %} End Highlight: 15 {% endcomment %}	
+		
+			
+		{% comment %} Start Highlight: 16 {% endcomment %}
+		{% if smarthHighlightCounter <= smarthMaxDisplayHighlight %}
+			 {% assign isStartbShowHighlight = false %} {% assign smarthProductIds = shop.metafields.smarth.highlight_15338 | split: "," %}
+				{% assign issmarthProductFound = false %}
+				{% assign smarthProductId = smarthProduct.id | downcase %}
+				{% if smarthProductIds contains smarthProductId %}
+					{% assign issmarthProductFound = true %}
+				{% endif %}{% if product.metafields.smart.myordercount != blank %}
+						{% if product.metafields.smart.myordercount.value.ordercount %}
+							{% assign OrderCount = product.metafields.smart.myordercount.value.ordercount | default: 0 %}
+							{% assign RecentSoldCount = product.metafields.smart.myordercount.value.recentcount | default: 0 %}
+						{% else%}
+							{% assign OrderCount = product.metafields.smart.myordercount.ordercount | default: 0 %}
+							{% assign RecentSoldCount = product.metafields.smart.myordercount.recentcount | default: 0 %}
+						{% endif %}
+					{% else  %} 
+						{% assign OrderCount = product.metafields.smart.ordercount | default: 0 %}
+						{% assign RecentSoldCount = product.metafields.smart.recentcount | default: 0 %}
+					{% endif %}{% if  true == issmarthProductFound  %}{% assign isStartbShowHighlight = true %}{% endif %}{% assign smarthUTC 		= "now" | date: "%s" %}
+			{% assign smarthUTC 		= smarthUTC | plus: 0 %}
+			{% assign smarthStartTime = 633891600  %}
+			{% assign smarthEndTime = 2053962000  %}
+			{% if smarthStartTime <= smarthUTC and smarthEndTime >= smarthUTC %}{% if isStartbShowHighlight == true %} 
+				{% assign smarthighlightGroup = '1' %} 
+				{% if smartGroup == smarthighlightGroup %}
+				{% assign smarthHighlightCounter = smarthHighlightCounter | plus: 1 %}{% assign lasthstring = '' %}{% assign lasthstringsubtitle = '' %}<div  class="{{smarthDesktop}} smart-px-0 smart-pb-2 smart-col-md-6 smart-col-sm-6 smart-col-12 {{smarthInnerClass}} smarth-15338     "  data-countryselectedh= '' data-screensizeselectedh= ''  countryrule=1 visitorcountryrule=0 style="  {{smarthInnerStyle}}  " onclick="shlink('','0','15338','1');">
+    <div class="smarthImageOuter smart-px-2 smart-py-1  smart-d-table-cell smart-align-middle" style="padding-right: 15pxpx" >  
+        <img class="smarthImage smart-d-block smart-mx-auto {{smarthImageClass}}" alt="highlight" src="https://s3.amazonaws.com/files.thalia-apps.com/smart/production/h15338" style="{{smarthImageStyle}} height:30px; width:30px; max-height:30px; max-width:30px;">
+    </div>
+    <div class="smarthText smart-d-table-cell smart-text-left smart-align-middle {{smarthTextClass}}" data-smartproductid='{{product.id}}' style="{{smarthTextStyle}} ">
+        <div class="smarthSubTitle " style="color: rgb(33, 37, 41); white-space: normal; overflow: hidden; font-weight: bold; font-size: 18px; ">
+            {% if lasthstringsubtitle == '' %}
+                Perfect Travel Size
+            {% else %}
+                {{lasthstringsubtitle}}
+            {% endif %}
+        </div>    
+        <div class="smarthTitle " style="white-space: normal; overflow: hidden; font-size: 13px; ">
+            {% if lasthstring == '' %}
+                Essential for long rides
+            {% else %}
+                {{lasthstring}}
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+
+
+
+                        {% endif %}{% endif %}{% endif %}	
+		{% endif %}
+		{% comment %} End Highlight: 16 {% endcomment %}	
+		
+			
+		{% comment %} Start Highlight: 17 {% endcomment %}
+		{% if smarthHighlightCounter <= smarthMaxDisplayHighlight %}
+			 {% assign isStartbShowHighlight = false %} {% assign smarthProductCollections = "267583356989" | split: "," %}{% assign issmarthProductCollectionFound0 = false %}
+						{% for collectionid in smarthProductCollections %}
+							{% assign collectionid2 = collectionid | plus: 0 %}
+							{% for shopifyrealcollection in smarthCollectionIds %}
+								{% if shopifyrealcollection == collectionid2 %}
+									{% assign issmarthProductCollectionFound0 = true %}
+									{% break %}
+								{% endif %}
+							{% endfor %}
+						{% endfor %}{% if product.metafields.smart.myordercount != blank %}
+						{% if product.metafields.smart.myordercount.value.ordercount %}
+							{% assign OrderCount = product.metafields.smart.myordercount.value.ordercount | default: 0 %}
+							{% assign RecentSoldCount = product.metafields.smart.myordercount.value.recentcount | default: 0 %}
+						{% else%}
+							{% assign OrderCount = product.metafields.smart.myordercount.ordercount | default: 0 %}
+							{% assign RecentSoldCount = product.metafields.smart.myordercount.recentcount | default: 0 %}
+						{% endif %}
+					{% else  %} 
+						{% assign OrderCount = product.metafields.smart.ordercount | default: 0 %}
+						{% assign RecentSoldCount = product.metafields.smart.recentcount | default: 0 %}
+					{% endif %}{% if  true == issmarthProductCollectionFound0  %}{% assign isStartbShowHighlight = true %}{% endif %}{% assign smarthUTC 		= "now" | date: "%s" %}
+			{% assign smarthUTC 		= smarthUTC | plus: 0 %}
+			{% assign smarthStartTime = 633891600  %}
+			{% assign smarthEndTime = 2053962000  %}
+			{% if smarthStartTime <= smarthUTC and smarthEndTime >= smarthUTC %}{% if isStartbShowHighlight == true %} 
+				{% assign smarthighlightGroup = '1' %} 
+				{% if smartGroup == smarthighlightGroup %}
+				{% assign smarthHighlightCounter = smarthHighlightCounter | plus: 1 %}{% assign lasthstring = '' %}{% assign lasthstringsubtitle = '' %}<div  class="{{smarthDesktop}} smart-px-0 smart-pb-2 smart-col-md-6 smart-col-sm-6 smart-col-12 {{smarthInnerClass}} smarth-15339     "  data-countryselectedh= '' data-screensizeselectedh= ''  countryrule=1 visitorcountryrule=0 style="  {{smarthInnerStyle}}  " onclick="shlink('','0','15339','1');">
+    <div class="smarthImageOuter smart-px-2 smart-py-1  smart-d-table-cell smart-align-middle" style="padding-right: 15pxpx" >  
+        <img class="smarthImage smart-d-block smart-mx-auto {{smarthImageClass}}" alt="highlight" src="https://s3.amazonaws.com/files.thalia-apps.com/smart/production/h15339" style="{{smarthImageStyle}} height:30px; width:30px; max-height:30px; max-width:30px;">
+    </div>
+    <div class="smarthText smart-d-table-cell smart-text-left smart-align-middle {{smarthTextClass}}" data-smartproductid='{{product.id}}' style="{{smarthTextStyle}} ">
+        <div class="smarthSubTitle " style="color: rgb(33, 37, 41); white-space: normal; overflow: hidden; font-weight: bold; font-size: 18px; ">
+            {% if lasthstringsubtitle == '' %}
+                Limited!
+            {% else %}
+                {{lasthstringsubtitle}}
+            {% endif %}
+        </div>    
+        <div class="smarthTitle " style="white-space: normal; overflow: hidden; font-size: 13px; ">
+            {% if lasthstring == '' %}
+                Plus the inventory is low
+            {% else %}
+                {{lasthstring}}
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+
+
+
+                        {% endif %}{% endif %}{% endif %}	
+		{% endif %}
+		{% comment %} End Highlight: 17 {% endcomment %}	
+		
+			
+		{% comment %} Start Highlight: 18 {% endcomment %}
+		{% if smarthHighlightCounter <= smarthMaxDisplayHighlight %}
+			 {% assign isStartbShowHighlight = false %} {% assign smarthProductIds = shop.metafields.smarth.highlight_15340 | split: "," %}
+				{% assign issmarthProductFound = false %}
+				{% assign smarthProductId = smarthProduct.id | downcase %}
+				{% if smarthProductIds contains smarthProductId %}
+					{% assign issmarthProductFound = true %}
+				{% endif %}{% if product.metafields.smart.myordercount != blank %}
+						{% if product.metafields.smart.myordercount.value.ordercount %}
+							{% assign OrderCount = product.metafields.smart.myordercount.value.ordercount | default: 0 %}
+							{% assign RecentSoldCount = product.metafields.smart.myordercount.value.recentcount | default: 0 %}
+						{% else%}
+							{% assign OrderCount = product.metafields.smart.myordercount.ordercount | default: 0 %}
+							{% assign RecentSoldCount = product.metafields.smart.myordercount.recentcount | default: 0 %}
+						{% endif %}
+					{% else  %} 
+						{% assign OrderCount = product.metafields.smart.ordercount | default: 0 %}
+						{% assign RecentSoldCount = product.metafields.smart.recentcount | default: 0 %}
+					{% endif %}{% if  true == issmarthProductFound  %}{% assign isStartbShowHighlight = true %}{% endif %}{% assign smarthUTC 		= "now" | date: "%s" %}
+			{% assign smarthUTC 		= smarthUTC | plus: 0 %}
+			{% assign smarthStartTime = 633891600  %}
+			{% assign smarthEndTime = 2053962000  %}
+			{% if smarthStartTime <= smarthUTC and smarthEndTime >= smarthUTC %}{% if isStartbShowHighlight == true %} 
+				{% assign smarthighlightGroup = '1' %} 
+				{% if smartGroup == smarthighlightGroup %}
+				{% assign smarthHighlightCounter = smarthHighlightCounter | plus: 1 %}{% assign lasthstring = '' %}{% assign lasthstringsubtitle = '' %}<div  class="{{smarthDesktop}} smart-px-0 smart-pb-2 smart-col-md-6 smart-col-sm-6 smart-col-12 {{smarthInnerClass}} smarth-15340     "  data-countryselectedh= '' data-screensizeselectedh= ''  countryrule=1 visitorcountryrule=0 style="  {{smarthInnerStyle}}  " onclick="shlink('','0','15340','1');">
+    <div class="smarthImageOuter smart-px-2 smart-py-1  smart-d-table-cell smart-align-middle" style="padding-right: 15pxpx" >  
+        <img class="smarthImage smart-d-block smart-mx-auto {{smarthImageClass}}" alt="highlight" src="https://s3.amazonaws.com/files.thalia-apps.com/smart/production/h15340" style="{{smarthImageStyle}} height:30px; width:30px; max-height:30px; max-width:30px;">
+    </div>
+    <div class="smarthText smart-d-table-cell smart-text-left smart-align-middle {{smarthTextClass}}" data-smartproductid='{{product.id}}' style="{{smarthTextStyle}} ">
+        <div class="smarthSubTitle " style="color: rgb(33, 37, 41); white-space: normal; overflow: hidden; font-weight: bold; font-size: 18px; ">
+            {% if lasthstringsubtitle == '' %}
+                Soap Saver
+            {% else %}
+                {{lasthstringsubtitle}}
+            {% endif %}
+        </div>    
+        <div class="smarthTitle " style="white-space: normal; overflow: hidden; font-size: 13px; ">
+            {% if lasthstring == '' %}
+                Extends the life of a bar x3
+            {% else %}
+                {{lasthstring}}
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+
+
+
+                        {% endif %}{% endif %}{% endif %}	
+		{% endif %}
+		{% comment %} End Highlight: 18 {% endcomment %}	
+		
+			
+		{% comment %} Start Highlight: 19 {% endcomment %}
+		{% if smarthHighlightCounter <= smarthMaxDisplayHighlight %}
+			 {% assign isStartbShowHighlight = false %} {% assign smarthProductIds = shop.metafields.smarth.highlight_15342 | split: "," %}
+				{% assign issmarthProductFound = false %}
+				{% assign smarthProductId = smarthProduct.id | downcase %}
+				{% if smarthProductIds contains smarthProductId %}
+					{% assign issmarthProductFound = true %}
+				{% endif %}{% if product.metafields.smart.myordercount != blank %}
+						{% if product.metafields.smart.myordercount.value.ordercount %}
+							{% assign OrderCount = product.metafields.smart.myordercount.value.ordercount | default: 0 %}
+							{% assign RecentSoldCount = product.metafields.smart.myordercount.value.recentcount | default: 0 %}
+						{% else%}
+							{% assign OrderCount = product.metafields.smart.myordercount.ordercount | default: 0 %}
+							{% assign RecentSoldCount = product.metafields.smart.myordercount.recentcount | default: 0 %}
+						{% endif %}
+					{% else  %} 
+						{% assign OrderCount = product.metafields.smart.ordercount | default: 0 %}
+						{% assign RecentSoldCount = product.metafields.smart.recentcount | default: 0 %}
+					{% endif %}{% if  true == issmarthProductFound  %}{% assign isStartbShowHighlight = true %}{% endif %}{% assign smarthUTC 		= "now" | date: "%s" %}
+			{% assign smarthUTC 		= smarthUTC | plus: 0 %}
+			{% assign smarthStartTime = 633891600  %}
+			{% assign smarthEndTime = 2053962000  %}
+			{% if smarthStartTime <= smarthUTC and smarthEndTime >= smarthUTC %}{% if isStartbShowHighlight == true %} 
+				{% assign smarthighlightGroup = '1' %} 
+				{% if smartGroup == smarthighlightGroup %}
+				{% assign smarthHighlightCounter = smarthHighlightCounter | plus: 1 %}{% assign lasthstring = '' %}{% assign lasthstringsubtitle = '' %}<div  class="{{smarthDesktop}} smart-px-0 smart-pb-2 smart-col-md-6 smart-col-sm-6 smart-col-12 {{smarthInnerClass}} smarth-15342     "  data-countryselectedh= '' data-screensizeselectedh= ''  countryrule=1 visitorcountryrule=0 style="  {{smarthInnerStyle}}  " onclick="shlink('','0','15342','1');">
+    <div class="smarthImageOuter smart-px-2 smart-py-1  smart-d-table-cell smart-align-middle" style="padding-right: 15pxpx" >  
+        <img class="smarthImage smart-d-block smart-mx-auto {{smarthImageClass}}" alt="highlight" src="https://s3.amazonaws.com/files.thalia-apps.com/smart/production/h15342" style="{{smarthImageStyle}} height:30px; width:30px; max-height:30px; max-width:30px;">
+    </div>
+    <div class="smarthText smart-d-table-cell smart-text-left smart-align-middle {{smarthTextClass}}" data-smartproductid='{{product.id}}' style="{{smarthTextStyle}} ">
+        <div class="smarthSubTitle " style="color: rgb(33, 37, 41); white-space: normal; overflow: hidden; font-weight: bold; font-size: 18px; ">
+            {% if lasthstringsubtitle == '' %}
+                Exfoliating For Skin
+            {% else %}
+                {{lasthstringsubtitle}}
+            {% endif %}
+        </div>    
+        <div class="smarthTitle " style="white-space: normal; overflow: hidden; font-size: 13px; ">
+            {% if lasthstring == '' %}
+                Great to free your pores
+            {% else %}
+                {{lasthstring}}
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+
+
+
+                        {% endif %}{% endif %}{% endif %}	
+		{% endif %}
+		{% comment %} End Highlight: 19 {% endcomment %}	
+		
+			
+		{% comment %} Start Highlight: 20 {% endcomment %}
+		{% if smarthHighlightCounter <= smarthMaxDisplayHighlight %}
+			 {% assign isStartbShowHighlight = false %} {% assign smarthProductIds = shop.metafields.smarth.highlight_15341 | split: "," %}
+				{% assign issmarthProductFound = false %}
+				{% assign smarthProductId = smarthProduct.id | downcase %}
+				{% if smarthProductIds contains smarthProductId %}
+					{% assign issmarthProductFound = true %}
+				{% endif %}{% if product.metafields.smart.myordercount != blank %}
+						{% if product.metafields.smart.myordercount.value.ordercount %}
+							{% assign OrderCount = product.metafields.smart.myordercount.value.ordercount | default: 0 %}
+							{% assign RecentSoldCount = product.metafields.smart.myordercount.value.recentcount | default: 0 %}
+						{% else%}
+							{% assign OrderCount = product.metafields.smart.myordercount.ordercount | default: 0 %}
+							{% assign RecentSoldCount = product.metafields.smart.myordercount.recentcount | default: 0 %}
+						{% endif %}
+					{% else  %} 
+						{% assign OrderCount = product.metafields.smart.ordercount | default: 0 %}
+						{% assign RecentSoldCount = product.metafields.smart.recentcount | default: 0 %}
+					{% endif %}{% if  true == issmarthProductFound  %}{% assign isStartbShowHighlight = true %}{% endif %}{% assign smarthUTC 		= "now" | date: "%s" %}
+			{% assign smarthUTC 		= smarthUTC | plus: 0 %}
+			{% assign smarthStartTime = 633891600  %}
+			{% assign smarthEndTime = 2053962000  %}
+			{% if smarthStartTime <= smarthUTC and smarthEndTime >= smarthUTC %}{% if isStartbShowHighlight == true %} 
+				{% assign smarthighlightGroup = '1' %} 
+				{% if smartGroup == smarthighlightGroup %}
+				{% assign smarthHighlightCounter = smarthHighlightCounter | plus: 1 %}{% assign lasthstring = '' %}{% assign lasthstringsubtitle = '' %}<div  class="{{smarthDesktop}} smart-px-0 smart-pb-2 smart-col-md-6 smart-col-sm-6 smart-col-12 {{smarthInnerClass}} smarth-15341     " data-tippy-content= 'Tap icon to know how' data-countryselectedh= '' data-screensizeselectedh= ''  countryrule=1 visitorcountryrule=0 style=" cursor:pointer; {{smarthInnerStyle}}  " onclick="shlink('','2','15341','0');">
+    <div class="smarthImageOuter smart-px-2 smart-py-1  smart-d-table-cell smart-align-middle" style="padding-right: 15pxpx" >  
+        <img class="smarthImage smart-d-block smart-mx-auto {{smarthImageClass}}" alt="highlight" src="https://s3.amazonaws.com/files.thalia-apps.com/smart/production/h15341" style="{{smarthImageStyle}} height:30px; width:30px; max-height:30px; max-width:30px;">
+    </div>
+    <div class="smarthText smart-d-table-cell smart-text-left smart-align-middle {{smarthTextClass}}" data-smartproductid='{{product.id}}' style="{{smarthTextStyle}} ">
+        <div class="smarthSubTitle " style="color: rgb(33, 37, 41); white-space: normal; overflow: hidden; font-weight: bold; font-size: 18px; ">
+            {% if lasthstringsubtitle == '' %}
+                Free Deal
+            {% else %}
+                {{lasthstringsubtitle}}
+            {% endif %}
+        </div>    
+        <div class="smarthTitle " style="white-space: normal; overflow: hidden; font-size: 13px; ">
+            {% if lasthstring == '' %}
+                Tap icon for more info
+            {% else %}
+                {{lasthstring}}
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+
+
+
+                        {% endif %}{% endif %}{% endif %}	
+		{% endif %}
+		{% comment %} End Highlight: 20 {% endcomment %}	
+		
+			
+		{% comment %} Start Highlight: 21 {% endcomment %}
+		{% if smarthHighlightCounter <= smarthMaxDisplayHighlight %}
+			 {% assign isStartbShowHighlight = false %} {% assign smarthProductIds = shop.metafields.smarth.highlight_15889 | split: "," %}
+				{% assign issmarthProductFound = false %}
+				{% assign smarthProductId = smarthProduct.id | downcase %}
+				{% if smarthProductIds contains smarthProductId %}
+					{% assign issmarthProductFound = true %}
+				{% endif %}{% if product.metafields.smart.myordercount != blank %}
+						{% if product.metafields.smart.myordercount.value.ordercount %}
+							{% assign OrderCount = product.metafields.smart.myordercount.value.ordercount | default: 0 %}
+							{% assign RecentSoldCount = product.metafields.smart.myordercount.value.recentcount | default: 0 %}
+						{% else%}
+							{% assign OrderCount = product.metafields.smart.myordercount.ordercount | default: 0 %}
+							{% assign RecentSoldCount = product.metafields.smart.myordercount.recentcount | default: 0 %}
+						{% endif %}
+					{% else  %} 
+						{% assign OrderCount = product.metafields.smart.ordercount | default: 0 %}
+						{% assign RecentSoldCount = product.metafields.smart.recentcount | default: 0 %}
+					{% endif %}{% if  true == issmarthProductFound  %}{% assign isStartbShowHighlight = true %}{% endif %}{% assign smarthUTC 		= "now" | date: "%s" %}
+			{% assign smarthUTC 		= smarthUTC | plus: 0 %}
+			{% assign smarthStartTime = 633891600  %}
+			{% assign smarthEndTime = 2053962000  %}
+			{% if smarthStartTime <= smarthUTC and smarthEndTime >= smarthUTC %}{% if isStartbShowHighlight == true %} 
+				{% assign smarthighlightGroup = '1' %} 
+				{% if smartGroup == smarthighlightGroup %}
+				{% assign smarthHighlightCounter = smarthHighlightCounter | plus: 1 %}{% assign lasthstring = '' %}{% assign lasthstringsubtitle = '' %}<div  class="{{smarthDesktop}} smart-px-0 smart-pb-2 smart-col-md-6 smart-col-sm-6 smart-col-12 {{smarthInnerClass}} smarth-15889     "  data-countryselectedh= '' data-screensizeselectedh= ''  countryrule=1 visitorcountryrule=0 style="  {{smarthInnerStyle}}  " onclick="shlink('','0','15889','1');">
+    <div class="smarthImageOuter smart-px-2 smart-py-1  smart-d-table-cell smart-align-middle" style="padding-right: 15pxpx" >  
+        <img class="smarthImage smart-d-block smart-mx-auto {{smarthImageClass}}" alt="highlight" src="https://s3.amazonaws.com/files.thalia-apps.com/smart/production/h15889" style="{{smarthImageStyle}} height:30px; width:30px; max-height:30px; max-width:30px;">
+    </div>
+    <div class="smarthText smart-d-table-cell smart-text-left smart-align-middle {{smarthTextClass}}" data-smartproductid='{{product.id}}' style="{{smarthTextStyle}} ">
+        <div class="smarthSubTitle " style="color: rgb(33, 37, 41); white-space: normal; overflow: hidden; font-weight: bold; font-size: 18px; ">
+            {% if lasthstringsubtitle == '' %}
+                More For Less
+            {% else %}
+                {{lasthstringsubtitle}}
+            {% endif %}
+        </div>    
+        <div class="smarthTitle " style="white-space: normal; overflow: hidden; font-size: 13px; ">
+            {% if lasthstring == '' %}
+                Make sure you're stocked up while saving
+            {% else %}
+                {{lasthstring}}
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+
+
+
+                        {% endif %}{% endif %}{% endif %}	
+		{% endif %}
+		{% comment %} End Highlight: 21 {% endcomment %}	
+		
+			
+		{% comment %} Start Highlight: 22 {% endcomment %}
+		{% if smarthHighlightCounter <= smarthMaxDisplayHighlight %}
+			 {% assign isStartbShowHighlight = false %} {% assign smarthProductCollections = "268452331581" | split: "," %}{% assign issmarthProductCollectionFound0 = false %}
+						{% for collectionid in smarthProductCollections %}
+							{% assign collectionid2 = collectionid | plus: 0 %}
+							{% for shopifyrealcollection in smarthCollectionIds %}
+								{% if shopifyrealcollection == collectionid2 %}
+									{% assign issmarthProductCollectionFound0 = true %}
+									{% break %}
+								{% endif %}
+							{% endfor %}
+						{% endfor %}{% if product.metafields.smart.myordercount != blank %}
+						{% if product.metafields.smart.myordercount.value.ordercount %}
+							{% assign OrderCount = product.metafields.smart.myordercount.value.ordercount | default: 0 %}
+							{% assign RecentSoldCount = product.metafields.smart.myordercount.value.recentcount | default: 0 %}
+						{% else%}
+							{% assign OrderCount = product.metafields.smart.myordercount.ordercount | default: 0 %}
+							{% assign RecentSoldCount = product.metafields.smart.myordercount.recentcount | default: 0 %}
+						{% endif %}
+					{% else  %} 
+						{% assign OrderCount = product.metafields.smart.ordercount | default: 0 %}
+						{% assign RecentSoldCount = product.metafields.smart.recentcount | default: 0 %}
+					{% endif %}{% if  true == issmarthProductCollectionFound0  %}{% assign isStartbShowHighlight = true %}{% endif %}{% assign smarthUTC 		= "now" | date: "%s" %}
+			{% assign smarthUTC 		= smarthUTC | plus: 0 %}
+			{% assign smarthStartTime = 633891600  %}
+			{% assign smarthEndTime = 2053962000  %}
+			{% if smarthStartTime <= smarthUTC and smarthEndTime >= smarthUTC %}{% if isStartbShowHighlight == true %} 
+				{% assign smarthighlightGroup = '1' %} 
+				{% if smartGroup == smarthighlightGroup %}
+				{% assign smarthHighlightCounter = smarthHighlightCounter | plus: 1 %}{% assign lasthstring = '' %}{% assign lasthstringsubtitle = '' %}<div  class="{{smarthDesktop}} smart-px-0 smart-pb-2 smart-col-md-6 smart-col-sm-6 smart-col-12 {{smarthInnerClass}} smarth-15891     "  data-countryselectedh= '' data-screensizeselectedh= ''  countryrule=1 visitorcountryrule=0 style=" cursor:pointer; {{smarthInnerStyle}}  " onclick="shlink('','2','15891','0');">
+    <div class="smarthImageOuter smart-px-2 smart-py-1  smart-d-table-cell smart-align-middle" style="padding-right: 15pxpx" >  
+        <img class="smarthImage smart-d-block smart-mx-auto {{smarthImageClass}}" alt="highlight" src="https://s3.amazonaws.com/files.thalia-apps.com/smart/production/h15891" style="{{smarthImageStyle}} height:30px; width:30px; max-height:30px; max-width:30px;">
+    </div>
+    <div class="smarthText smart-d-table-cell smart-text-left smart-align-middle {{smarthTextClass}}" data-smartproductid='{{product.id}}' style="{{smarthTextStyle}} ">
+        <div class="smarthSubTitle " style="color: rgb(33, 37, 41); white-space: normal; overflow: hidden; font-weight: bold; font-size: 18px; ">
+            {% if lasthstringsubtitle == '' %}
+                Removes Buildup
+            {% else %}
+                {{lasthstringsubtitle}}
+            {% endif %}
+        </div>    
+        <div class="smarthTitle " style="white-space: normal; overflow: hidden; font-size: 13px; ">
+            {% if lasthstring == '' %}
+                Clarifying yet safe for colored hair
+            {% else %}
+                {{lasthstring}}
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+
+
+
+                        {% endif %}{% endif %}{% endif %}	
+		{% endif %}
+		{% comment %} End Highlight: 22 {% endcomment %}	
+		
+			
+		{% comment %} Start Highlight: 23 {% endcomment %}
+		{% if smarthHighlightCounter <= smarthMaxDisplayHighlight %}
+			 {% assign isStartbShowHighlight = false %} {% assign smarthProductCollections = "268452331581" | split: "," %}{% assign issmarthProductCollectionFound0 = false %}
+						{% for collectionid in smarthProductCollections %}
+							{% assign collectionid2 = collectionid | plus: 0 %}
+							{% for shopifyrealcollection in smarthCollectionIds %}
+								{% if shopifyrealcollection == collectionid2 %}
+									{% assign issmarthProductCollectionFound0 = true %}
+									{% break %}
+								{% endif %}
+							{% endfor %}
+						{% endfor %}{% if product.metafields.smart.myordercount != blank %}
+						{% if product.metafields.smart.myordercount.value.ordercount %}
+							{% assign OrderCount = product.metafields.smart.myordercount.value.ordercount | default: 0 %}
+							{% assign RecentSoldCount = product.metafields.smart.myordercount.value.recentcount | default: 0 %}
+						{% else%}
+							{% assign OrderCount = product.metafields.smart.myordercount.ordercount | default: 0 %}
+							{% assign RecentSoldCount = product.metafields.smart.myordercount.recentcount | default: 0 %}
+						{% endif %}
+					{% else  %} 
+						{% assign OrderCount = product.metafields.smart.ordercount | default: 0 %}
+						{% assign RecentSoldCount = product.metafields.smart.recentcount | default: 0 %}
+					{% endif %}{% if  true == issmarthProductCollectionFound0  %}{% assign isStartbShowHighlight = true %}{% endif %}{% assign smarthUTC 		= "now" | date: "%s" %}
+			{% assign smarthUTC 		= smarthUTC | plus: 0 %}
+			{% assign smarthStartTime = 633891600  %}
+			{% assign smarthEndTime = 2053962000  %}
+			{% if smarthStartTime <= smarthUTC and smarthEndTime >= smarthUTC %}{% if isStartbShowHighlight == true %} 
+				{% assign smarthighlightGroup = '1' %} 
+				{% if smartGroup == smarthighlightGroup %}
+				{% assign smarthHighlightCounter = smarthHighlightCounter | plus: 1 %}{% assign lasthstring = '' %}{% assign lasthstringsubtitle = '' %}<div  class="{{smarthDesktop}} smart-px-0 smart-pb-2 smart-col-md-6 smart-col-sm-6 smart-col-12 {{smarthInnerClass}} smarth-15892     "  data-countryselectedh= '' data-screensizeselectedh= ''  countryrule=1 visitorcountryrule=0 style=" cursor:pointer; {{smarthInnerStyle}}  " onclick="shlink('','2','15892','0');">
+    <div class="smarthImageOuter smart-px-2 smart-py-1  smart-d-table-cell smart-align-middle" style="padding-right: 15pxpx" >  
+        <img class="smarthImage smart-d-block smart-mx-auto {{smarthImageClass}}" alt="highlight" src="https://s3.amazonaws.com/files.thalia-apps.com/smart/production/h15892" style="{{smarthImageStyle}} height:30px; width:30px; max-height:30px; max-width:30px;">
+    </div>
+    <div class="smarthText smart-d-table-cell smart-text-left smart-align-middle {{smarthTextClass}}" data-smartproductid='{{product.id}}' style="{{smarthTextStyle}} ">
+        <div class="smarthSubTitle " style="color: rgb(33, 37, 41); white-space: normal; overflow: hidden; font-weight: bold; font-size: 18px; ">
+            {% if lasthstringsubtitle == '' %}
+                Conditioner Replacement
+            {% else %}
+                {{lasthstringsubtitle}}
+            {% endif %}
+        </div>    
+        <div class="smarthTitle " style="white-space: normal; overflow: hidden; font-size: 13px; ">
+            {% if lasthstring == '' %}
+                Tap icon for more info
+            {% else %}
+                {{lasthstring}}
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+
+
+
+                        {% endif %}{% endif %}{% endif %}	
+		{% endif %}
+		{% comment %} End Highlight: 23 {% endcomment %}	
+		
+			
+		{% comment %} Start Highlight: 24 {% endcomment %}
+		{% if smarthHighlightCounter <= smarthMaxDisplayHighlight %}
+			 {% assign isStartbShowHighlight = false %} {% assign smarthProductIds = shop.metafields.smarth.highlight_15895 | split: "," %}
+				{% assign issmarthProductFound = false %}
+				{% assign smarthProductId = smarthProduct.id | downcase %}
+				{% if smarthProductIds contains smarthProductId %}
+					{% assign issmarthProductFound = true %}
+				{% endif %}{% if product.metafields.smart.myordercount != blank %}
+						{% if product.metafields.smart.myordercount.value.ordercount %}
+							{% assign OrderCount = product.metafields.smart.myordercount.value.ordercount | default: 0 %}
+							{% assign RecentSoldCount = product.metafields.smart.myordercount.value.recentcount | default: 0 %}
+						{% else%}
+							{% assign OrderCount = product.metafields.smart.myordercount.ordercount | default: 0 %}
+							{% assign RecentSoldCount = product.metafields.smart.myordercount.recentcount | default: 0 %}
+						{% endif %}
+					{% else  %} 
+						{% assign OrderCount = product.metafields.smart.ordercount | default: 0 %}
+						{% assign RecentSoldCount = product.metafields.smart.recentcount | default: 0 %}
+					{% endif %}{% if  true == issmarthProductFound  %}{% assign isStartbShowHighlight = true %}{% endif %}{% assign smarthUTC 		= "now" | date: "%s" %}
+			{% assign smarthUTC 		= smarthUTC | plus: 0 %}
+			{% assign smarthStartTime = 633891600  %}
+			{% assign smarthEndTime = 2053962000  %}
+			{% if smarthStartTime <= smarthUTC and smarthEndTime >= smarthUTC %}{% if isStartbShowHighlight == true %} 
+				{% assign smarthighlightGroup = '1' %} 
+				{% if smartGroup == smarthighlightGroup %}
+				{% assign smarthHighlightCounter = smarthHighlightCounter | plus: 1 %}{% assign lasthstring = '' %}{% assign lasthstringsubtitle = '' %}<div  class="{{smarthDesktop}} smart-px-0 smart-pb-2 smart-col-md-6 smart-col-sm-6 smart-col-12 {{smarthInnerClass}} smarth-15895     "  data-countryselectedh= '' data-screensizeselectedh= ''  countryrule=1 visitorcountryrule=0 style=" cursor:pointer; {{smarthInnerStyle}}  " onclick="shlink('','2','15895','0');">
+    <div class="smarthImageOuter smart-px-2 smart-py-1  smart-d-table-cell smart-align-middle" style="padding-right: 15pxpx" >  
+        <img class="smarthImage smart-d-block smart-mx-auto {{smarthImageClass}}" alt="highlight" src="https://s3.amazonaws.com/files.thalia-apps.com/smart/production/h15895" style="{{smarthImageStyle}} height:30px; width:30px; max-height:30px; max-width:30px;">
+    </div>
+    <div class="smarthText smart-d-table-cell smart-text-left smart-align-middle {{smarthTextClass}}" data-smartproductid='{{product.id}}' style="{{smarthTextStyle}} ">
+        <div class="smarthSubTitle " style="color: rgb(33, 37, 41); white-space: normal; overflow: hidden; font-weight: bold; font-size: 18px; ">
+            {% if lasthstringsubtitle == '' %}
+                Rosemary Power
+            {% else %}
+                {{lasthstringsubtitle}}
+            {% endif %}
+        </div>    
+        <div class="smarthTitle " style="white-space: normal; overflow: hidden; font-size: 13px; ">
+            {% if lasthstring == '' %}
+                Further promotes growth & scalp health
+            {% else %}
+                {{lasthstring}}
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+
+
+
+                        {% endif %}{% endif %}{% endif %}	
+		{% endif %}
+		{% comment %} End Highlight: 24 {% endcomment %}	
+		
+			
+		{% comment %} Start Highlight: 25 {% endcomment %}
+		{% if smarthHighlightCounter <= smarthMaxDisplayHighlight %}
+			 {% assign isStartbShowHighlight = false %} {% assign smarthProductIds = shop.metafields.smarth.highlight_20565 | split: "," %}
+				{% assign issmarthProductFound = false %}
+				{% assign smarthProductId = smarthProduct.id | downcase %}
+				{% if smarthProductIds contains smarthProductId %}
+					{% assign issmarthProductFound = true %}
+				{% endif %}{% if product.metafields.smart.myordercount != blank %}
+						{% if product.metafields.smart.myordercount.value.ordercount %}
+							{% assign OrderCount = product.metafields.smart.myordercount.value.ordercount | default: 0 %}
+							{% assign RecentSoldCount = product.metafields.smart.myordercount.value.recentcount | default: 0 %}
+						{% else%}
+							{% assign OrderCount = product.metafields.smart.myordercount.ordercount | default: 0 %}
+							{% assign RecentSoldCount = product.metafields.smart.myordercount.recentcount | default: 0 %}
+						{% endif %}
+					{% else  %} 
+						{% assign OrderCount = product.metafields.smart.ordercount | default: 0 %}
+						{% assign RecentSoldCount = product.metafields.smart.recentcount | default: 0 %}
+					{% endif %}{% if  true == issmarthProductFound  %}{% assign isStartbShowHighlight = true %}{% endif %}{% assign smarthUTC 		= "now" | date: "%s" %}
+			{% assign smarthUTC 		= smarthUTC | plus: 0 %}
+			{% assign smarthStartTime = 633891600  %}
+			{% assign smarthEndTime = 2053962000  %}
+			{% if smarthStartTime <= smarthUTC and smarthEndTime >= smarthUTC %}{% if isStartbShowHighlight == true %} 
+				{% assign smarthighlightGroup = '1' %} 
+				{% if smartGroup == smarthighlightGroup %}
+				{% assign smarthHighlightCounter = smarthHighlightCounter | plus: 1 %}{% assign lasthstring = '' %}{% assign lasthstringsubtitle = '' %}<div  class="{{smarthDesktop}} smart-px-0 smart-pb-2 smart-col-md-6 smart-col-sm-6 smart-col-12 {{smarthInnerClass}} smarth-20565     "  data-countryselectedh= '' data-screensizeselectedh= ''  countryrule=1 visitorcountryrule=0 style=" cursor:pointer; {{smarthInnerStyle}}  " onclick="shlink('','2','20565','0');">
+    <div class="smarthImageOuter smart-px-2 smart-py-1  smart-d-table-cell smart-align-middle" style="padding-right: 15pxpx" >  
+        <img class="smarthImage smart-d-block smart-mx-auto {{smarthImageClass}}" alt="highlight" src="https://s3.amazonaws.com/files.thalia-apps.com/smart/production/h20565" style="{{smarthImageStyle}} height:30px; width:30px; max-height:30px; max-width:30px;">
+    </div>
+    <div class="smarthText smart-d-table-cell smart-text-left smart-align-middle {{smarthTextClass}}" data-smartproductid='{{product.id}}' style="{{smarthTextStyle}} ">
+        <div class="smarthSubTitle " style="color: rgb(33, 37, 41); white-space: normal; overflow: hidden; font-weight: bold; font-size: 18px; ">
+            {% if lasthstringsubtitle == '' %}
+                Orange Peel Power
+            {% else %}
+                {{lasthstringsubtitle}}
+            {% endif %}
+        </div>    
+        <div class="smarthTitle " style="white-space: normal; overflow: hidden; font-size: 13px; ">
+            {% if lasthstring == '' %}
+                Further detoxifies hair & scalp
+            {% else %}
+                {{lasthstring}}
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+
+
+
+                        {% endif %}{% endif %}{% endif %}	
+		{% endif %}
+		{% comment %} End Highlight: 25 {% endcomment %}	
+		
+			
+		{% comment %} Start Highlight: 26 {% endcomment %}
+		{% if smarthHighlightCounter <= smarthMaxDisplayHighlight %}
+			 {% assign isStartbShowHighlight = false %} {% assign smarthProductIds = shop.metafields.smarth.highlight_17087 | split: "," %}
+				{% assign issmarthProductFound = false %}
+				{% assign smarthProductId = smarthProduct.id | downcase %}
+				{% if smarthProductIds contains smarthProductId %}
+					{% assign issmarthProductFound = true %}
+				{% endif %}{% if product.metafields.smart.myordercount != blank %}
+						{% if product.metafields.smart.myordercount.value.ordercount %}
+							{% assign OrderCount = product.metafields.smart.myordercount.value.ordercount | default: 0 %}
+							{% assign RecentSoldCount = product.metafields.smart.myordercount.value.recentcount | default: 0 %}
+						{% else%}
+							{% assign OrderCount = product.metafields.smart.myordercount.ordercount | default: 0 %}
+							{% assign RecentSoldCount = product.metafields.smart.myordercount.recentcount | default: 0 %}
+						{% endif %}
+					{% else  %} 
+						{% assign OrderCount = product.metafields.smart.ordercount | default: 0 %}
+						{% assign RecentSoldCount = product.metafields.smart.recentcount | default: 0 %}
+					{% endif %}{% if  true == issmarthProductFound  %}{% assign isStartbShowHighlight = true %}{% endif %}{% assign smarthUTC 		= "now" | date: "%s" %}
+			{% assign smarthUTC 		= smarthUTC | plus: 0 %}
+			{% assign smarthStartTime = 633891600  %}
+			{% assign smarthEndTime = 2053962000  %}
+			{% if smarthStartTime <= smarthUTC and smarthEndTime >= smarthUTC %}{% if isStartbShowHighlight == true %} 
+				{% assign smarthighlightGroup = '1' %} 
+				{% if smartGroup == smarthighlightGroup %}
+				{% assign smarthHighlightCounter = smarthHighlightCounter | plus: 1 %}{% assign lasthstring = '' %}{% assign lasthstringsubtitle = '' %}<div  class="{{smarthDesktop}} smart-px-0 smart-pb-2 smart-col-md-6 smart-col-sm-6 smart-col-12 {{smarthInnerClass}} smarth-17087     "  data-countryselectedh= '' data-screensizeselectedh= ''  countryrule=1 visitorcountryrule=0 style="  {{smarthInnerStyle}}  " onclick="shlink('','0','17087','1');">
+    <div class="smarthImageOuter smart-px-2 smart-py-1  smart-d-table-cell smart-align-middle" style="padding-right: 15pxpx" >  
+        <img class="smarthImage smart-d-block smart-mx-auto {{smarthImageClass}}" alt="highlight" src="https://s3.amazonaws.com/files.thalia-apps.com/smart/production/h17087" style="{{smarthImageStyle}} height:30px; width:30px; max-height:30px; max-width:30px;">
+    </div>
+    <div class="smarthText smart-d-table-cell smart-text-left smart-align-middle {{smarthTextClass}}" data-smartproductid='{{product.id}}' style="{{smarthTextStyle}} ">
+        <div class="smarthSubTitle " style="color: rgb(33, 37, 41); white-space: normal; overflow: hidden; font-weight: bold; font-size: 18px; ">
+            {% if lasthstringsubtitle == '' %}
+                Detox
+            {% else %}
+                {{lasthstringsubtitle}}
+            {% endif %}
+        </div>    
+        <div class="smarthTitle " style="white-space: normal; overflow: hidden; font-size: 13px; ">
+            {% if lasthstring == '' %}
+                Best mist for detoxing scalp
+            {% else %}
+                {{lasthstring}}
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+
+
+
+                        {% endif %}{% endif %}{% endif %}	
+		{% endif %}
+		{% comment %} End Highlight: 26 {% endcomment %}	
+		
+			
+		{% comment %} Start Highlight: 27 {% endcomment %}
+		{% if smarthHighlightCounter <= smarthMaxDisplayHighlight %}
+			 {% assign isStartbShowHighlight = false %} {% assign smarthProductIds = shop.metafields.smarth.highlight_20566 | split: "," %}
+				{% assign issmarthProductFound = false %}
+				{% assign smarthProductId = smarthProduct.id | downcase %}
+				{% if smarthProductIds contains smarthProductId %}
+					{% assign issmarthProductFound = true %}
+				{% endif %}{% if product.metafields.smart.myordercount != blank %}
+						{% if product.metafields.smart.myordercount.value.ordercount %}
+							{% assign OrderCount = product.metafields.smart.myordercount.value.ordercount | default: 0 %}
+							{% assign RecentSoldCount = product.metafields.smart.myordercount.value.recentcount | default: 0 %}
+						{% else%}
+							{% assign OrderCount = product.metafields.smart.myordercount.ordercount | default: 0 %}
+							{% assign RecentSoldCount = product.metafields.smart.myordercount.recentcount | default: 0 %}
+						{% endif %}
+					{% else  %} 
+						{% assign OrderCount = product.metafields.smart.ordercount | default: 0 %}
+						{% assign RecentSoldCount = product.metafields.smart.recentcount | default: 0 %}
+					{% endif %}{% if  true == issmarthProductFound  %}{% assign isStartbShowHighlight = true %}{% endif %}{% assign smarthUTC 		= "now" | date: "%s" %}
+			{% assign smarthUTC 		= smarthUTC | plus: 0 %}
+			{% assign smarthStartTime = 633891600  %}
+			{% assign smarthEndTime = 2053962000  %}
+			{% if smarthStartTime <= smarthUTC and smarthEndTime >= smarthUTC %}{% if isStartbShowHighlight == true %} 
+				{% assign smarthighlightGroup = '1' %} 
+				{% if smartGroup == smarthighlightGroup %}
+				{% assign smarthHighlightCounter = smarthHighlightCounter | plus: 1 %}{% assign lasthstring = '' %}{% assign lasthstringsubtitle = '' %}<div  class="{{smarthDesktop}} smart-px-0 smart-pb-2 smart-col-md-6 smart-col-sm-6 smart-col-12 {{smarthInnerClass}} smarth-20566     "  data-countryselectedh= '' data-screensizeselectedh= ''  countryrule=1 visitorcountryrule=0 style="  {{smarthInnerStyle}}  " onclick="shlink('','0','20566','1');">
+    <div class="smarthImageOuter smart-px-2 smart-py-1  smart-d-table-cell smart-align-middle" style="padding-right: 15pxpx" >  
+        <img class="smarthImage smart-d-block smart-mx-auto {{smarthImageClass}}" alt="highlight" src="https://s3.amazonaws.com/files.thalia-apps.com/smart/production/h20566" style="{{smarthImageStyle}} height:30px; width:30px; max-height:30px; max-width:30px;">
+    </div>
+    <div class="smarthText smart-d-table-cell smart-text-left smart-align-middle {{smarthTextClass}}" data-smartproductid='{{product.id}}' style="{{smarthTextStyle}} ">
+        <div class="smarthSubTitle " style="color: rgb(33, 37, 41); white-space: normal; overflow: hidden; font-weight: bold; font-size: 18px; ">
+            {% if lasthstringsubtitle == '' %}
+                Enhances Silkiness
+            {% else %}
+                {{lasthstringsubtitle}}
+            {% endif %}
+        </div>    
+        <div class="smarthTitle " style="white-space: normal; overflow: hidden; font-size: 13px; ">
+            {% if lasthstring == '' %}
+                Brings out the best of each hair strand
+            {% else %}
+                {{lasthstring}}
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+
+
+
+                        {% endif %}{% endif %}{% endif %}	
+		{% endif %}
+		{% comment %} End Highlight: 27 {% endcomment %}	
+		
+		</div></div> 
+			
+		{% if HideAssets != '1' %}{% render 'smarth-js' %}{% endif %}
+		

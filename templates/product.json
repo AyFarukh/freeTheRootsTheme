@@ -1,0 +1,230 @@
+{
+  "sections": {
+    "b86204f9-4d14-471e-8a9f-241176b34108": {
+      "type": "breadcrumb_section",
+      "settings": {
+      }
+    },
+    "main": {
+      "type": "main-product",
+      "blocks": {
+        "vendor_and_type": {
+          "type": "vendor_and_type",
+          "settings": {
+            "prod_show_brand": false,
+            "prod_show_type": true
+          }
+        },
+        "title": {
+          "type": "title",
+          "settings": {
+            "heading_h1": true,
+            "heading_h2": true
+          }
+        },
+        "price": {
+          "type": "price",
+          "settings": {
+            "show_tax_and_shipping": false
+          }
+        },
+        "rating": {
+          "type": "rating",
+          "settings": {
+          }
+        },
+        "c25cad53-6096-4e55-bf80-12c6e88cb4e6": {
+          "type": "short_description",
+          "disabled": true,
+          "settings": {
+            "enable_short_des": true
+          }
+        },
+        "e595eaa4-786b-4232-b99a-d6a8bdbee4f8": {
+          "type": "custom_liquid",
+          "settings": {
+            "custom_liquid": "<style>\n#simple-bundles-io-options[data-simple-bundles-variant-id] select {\n\tborder-radius: 25px;\n\tborder: 1px solid #0ca856;\n\tbox-shadow: inset 0 0 0 0.2px #0ca856;\n\tcolor: #6a6e68;\n\tmargin-bottom: 12px;\n\tbackground-color: #fff;\n}\n\n#simple-bundles-io-options[data-simple-bundles-variant-id] select:focus-visible {\n\tborder: 1px solid #0ca856;\n}\n\n#simple-bundles-io-options[data-simple-bundles-variant-id] label {\n\tcolor: #535751;\n\tfont-weight: 900;\n\tmargin-bottom: 4px;\n}\n<\/style>",
+            "show_in_quickbuy": false
+          }
+        },
+        "variant_picker": {
+          "type": "variant_picker",
+          "settings": {
+            "prod_clicky_opt_names": "",
+            "stock_warning_show": false,
+            "stock_warning_limit": 5,
+            "show_size_chart": false,
+            "size_chart_variant": "Size",
+            "size_chart_page": ""
+          }
+        },
+        "buy_buttons": {
+          "type": "buy_buttons",
+          "settings": {
+            "enable_payment_button": true,
+            "show_pickup_availability": true,
+            "show_backorder_text": true
+          }
+        },
+        "0dc6fcaf-101f-4ce5-aed2-c624a668b6a5": {
+          "type": "shopify:\/\/apps\/product-description-icons\/blocks\/app-block\/7dd56c55-575e-42fb-9dab-ccac1ce252d8",
+          "settings": {
+            "group": "1",
+            "outerclass": "product___icons",
+            "outerstyle": "",
+            "innerclass": "",
+            "innerstyle": "",
+            "imageclass": "",
+            "imagestyle": "",
+            "textclass": "",
+            "textstyle": ""
+          }
+        },
+        "92b50b40-67a9-4463-be4e-6d7b78dc3974": {
+          "type": "accordions",
+          "settings": {
+          }
+        },
+        "85eb67b7-24cb-4149-8a7b-e4ff2e4693d1": {
+          "type": "shipping_return",
+          "disabled": true,
+          "settings": {
+            "warranties_logo": "shopify:\/\/shop_images\/like_60x60_2a353d5e-45e3-4110-9522-bf660061d987.png",
+            "warranties_text": "100% organic products",
+            "warranties_link": "",
+            "delivery_logo": "shopify:\/\/shop_images\/quality_60x60_8ca556cb-5a94-476a-b55f-02b2ff04efb1.png",
+            "delivery_text": "Quality Gauarnteed",
+            "delivery_link": "",
+            "return_logo": "shopify:\/\/shop_images\/free-shipping_60x60_eaf2d784-b4fb-4be0-896a-26bc52f5cd36.png",
+            "return_text": "Free shipping",
+            "return_link": ""
+          }
+        },
+        "divider": {
+          "type": "divider",
+          "disabled": true,
+          "settings": {
+            "show_line": true,
+            "spacing_above": "small",
+            "spacing_below": "small",
+            "show_in_quickbuy": false
+          }
+        },
+        "description": {
+          "type": "description",
+          "disabled": true,
+          "settings": {
+            "show_in_quickbuy": false,
+            "display": "standard"
+          }
+        }
+      },
+      "block_order": [
+        "vendor_and_type",
+        "title",
+        "price",
+        "rating",
+        "c25cad53-6096-4e55-bf80-12c6e88cb4e6",
+        "e595eaa4-786b-4232-b99a-d6a8bdbee4f8",
+        "variant_picker",
+        "buy_buttons",
+        "0dc6fcaf-101f-4ce5-aed2-c624a668b6a5",
+        "92b50b40-67a9-4463-be4e-6d7b78dc3974",
+        "85eb67b7-24cb-4149-8a7b-e4ff2e4693d1",
+        "divider",
+        "description"
+      ],
+      "settings": {
+        "additional_badage": false,
+        "additional_img_info": false,
+        "page_width": "medium",
+        "description_below": false,
+        "show_reviews": true,
+        "enable_video_looping": true,
+        "enable_product_image_zoom": false,
+        "mobile_slideshow_navigation": "arrows"
+      }
+    },
+    "ebf1a275-b309-404a-bc97-f8c5d9021505": {
+      "type": "custom-liquid",
+      "settings": {
+        "no_margins": false,
+        "custom_liquid": "{{ '\/\/code.jquery.com\/ui\/1.11.4\/themes\/smoothness\/jquery-ui.css' | stylesheet_tag }}\n{{ '\/\/code.jquery.com\/jquery-1.10.2.js' | script_tag }}\n{{ '\/\/code.jquery.com\/ui\/1.11.4\/jquery-ui.js' | script_tag }}\n<div id='wk_product_faq'><\/div>"
+      }
+    },
+    "18e0f306-b6ef-4f63-9ecc-abcdaaf095d0": {
+      "type": "product_faq",
+      "blocks": {
+        "a171f76d-ed57-4136-9374-18dc5a77b1eb": {
+          "type": "text",
+          "settings": {
+            "question": "Question one",
+            "answer": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged."
+          }
+        },
+        "77f8a48c-dad3-4fa3-a133-0e12165408c8": {
+          "type": "text",
+          "settings": {
+            "question": "Question two",
+            "answer": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged."
+          }
+        },
+        "1d8301f4-f2f1-46d2-86ae-ec49e21f6da0": {
+          "type": "text",
+          "settings": {
+            "question": "Question three",
+            "answer": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged."
+          }
+        },
+        "4b6917bb-8014-483c-825e-356843f1876b": {
+          "type": "text",
+          "settings": {
+            "question": "Question four",
+            "answer": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged."
+          }
+        }
+      },
+      "block_order": [
+        "a171f76d-ed57-4136-9374-18dc5a77b1eb",
+        "77f8a48c-dad3-4fa3-a133-0e12165408c8",
+        "1d8301f4-f2f1-46d2-86ae-ec49e21f6da0",
+        "4b6917bb-8014-483c-825e-356843f1876b"
+      ],
+      "disabled": true,
+      "settings": {
+        "section-subheading": "FAQ"
+      }
+    },
+    "1683865256df53c38f": {
+      "type": "apps",
+      "blocks": {
+        "e462dd39-bfbd-41bc-80a6-87f38be72fa0": {
+          "type": "shopify:\/\/apps\/judge-me-product-reviews\/blocks\/review_widget\/61ccd3b1-a9f2-4160-9fe9-4fec8413e5d8",
+          "settings": {
+          }
+        }
+      },
+      "block_order": [
+        "e462dd39-bfbd-41bc-80a6-87f38be72fa0"
+      ],
+      "settings": {
+      }
+    },
+    "product-recommendations": {
+      "type": "product-recommendations",
+      "settings": {
+        "recommendations_title": "You may also like",
+        "grid_show_vendor": false,
+        "products_per_row": 4
+      }
+    }
+  },
+  "order": [
+    "b86204f9-4d14-471e-8a9f-241176b34108",
+    "main",
+    "ebf1a275-b309-404a-bc97-f8c5d9021505",
+    "18e0f306-b6ef-4f63-9ecc-abcdaaf095d0",
+    "1683865256df53c38f",
+    "product-recommendations"
+  ]
+}

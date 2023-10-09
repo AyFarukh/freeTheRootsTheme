@@ -1,0 +1,185 @@
+{
+  "sections": {
+    "main": {
+      "type": "main-page",
+      "custom_css": [
+        "h1 {margin: 50px 0; text-align: center;}"
+      ],
+      "settings": {
+      }
+    },
+    "dc4785f3-5c4a-4e83-a891-ea507b282914": {
+      "type": "custom-img-with-txt",
+      "settings": {
+        "custom_class": "paddingV textWithImageSection",
+        "image": "shopify:\/\/shop_images\/Girl_1_73c87e9f-2f38-4af4-b67b-b7cb66ce73bc.png",
+        "image_link": "",
+        "subheading": "Know What You’re Using",
+        "title": "Educate Yourself",
+        "title_size": 40,
+        "heading_h1": false,
+        "text": "<p>All things in nature were created with a purpose and many benefit our bodies. If you're here, you want to know exactly how they do.<\/p><p>Expand your knowledge as you explore each ingredient so that you can wisely use them for your benefit. The ingredients that are used in our soaps will be included as well as many others.<\/p><p>If you don’t know which one to learn about first, a good place to start is <a href=\"https:\/\/www.freetheroots.com\/blogs\/ingredients\/aloe-vera-gel\" title=\"100% Aloe Vera Gel\">Aloe Vera Gel<\/a>!<\/p>",
+        "enlarge_text": false,
+        "button1_label": "",
+        "button1_link": "",
+        "button2_label": "",
+        "button2_link": "",
+        "button_style": "primary",
+        "text_alignment": "center right",
+        "full_width": true,
+        "mobile_overlay_under": false,
+        "image_overlay_style": "standard"
+      }
+    },
+    "ec7a095d-7078-4cf1-806a-13ab5bb3d807": {
+      "type": "image-with-text-overlay",
+      "disabled": true,
+      "settings": {
+        "custom_class": "",
+        "image": "shopify:\/\/shop_images\/Girl_1_73c87e9f-2f38-4af4-b67b-b7cb66ce73bc.png",
+        "image_link": "",
+        "height": "fixed",
+        "height_desktop": 650,
+        "height_mobile": 250,
+        "subheading": "Know What You’re Using",
+        "title": "Educate Yourself",
+        "title_size": 40,
+        "heading_h1": false,
+        "text": "<p>All things in nature were created with a purpose and many benefit our bodies. If you're here, you want to know exactly how they do.<\/p><p>Expand your knowledge as you explore each ingredient so that you can wisely use them for your benefit. The ingredients that are used in our soaps will be included as well as many others.<\/p><p>If you don’t know which one to learn about first, a good place to start is <a href=\"\/blogs\/ingredients\/aloe-vera-gel\" title=\"100% Aloe Vera Gel\">Aloe Vera Gel<\/a>!<\/p>",
+        "enlarge_text": true,
+        "button1_label": "",
+        "button1_link": "",
+        "button2_label": "",
+        "button2_link": "",
+        "button_style": "primary",
+        "text_alignment": "center right",
+        "full_width": true,
+        "mobile_overlay_under": false,
+        "image_overlay_style": "standard"
+      }
+    },
+    "7525f0d5-8274-45c9-9c76-02c324a332a7": {
+      "type": "custom-img-with-txt",
+      "settings": {
+        "custom_class": "paddingV textWithImageSection",
+        "image": "shopify:\/\/shop_images\/Girl_2.png",
+        "image_link": "",
+        "subheading": "All Natural",
+        "title": "Scents From Nature",
+        "title_size": 40,
+        "heading_h1": false,
+        "text": "<p>Every scent that you smell in our soaps are directly from essential oils. Each essential oil is packed with unique benefits that are healthy for your body, hair and mind.<\/p><p>If you want to learn more about these benefits, a good place to start is <a href=\"\/blogs\/ingredients\/eucalyptus-essential-oil\" title=\"Eucalyptus Essential Oil\">Eucalyptus Essential Oil<\/a>!<\/p>",
+        "enlarge_text": false,
+        "button1_label": "",
+        "button1_link": "",
+        "button2_label": "",
+        "button2_link": "",
+        "button_style": "primary",
+        "text_alignment": "center left",
+        "full_width": true,
+        "mobile_overlay_under": false,
+        "image_overlay_style": "standard"
+      }
+    },
+    "d50bb865-c186-4926-bb29-944147723eb4": {
+      "type": "image-with-text-overlay",
+      "disabled": true,
+      "settings": {
+        "custom_class": "",
+        "image": "shopify:\/\/shop_images\/Girl_2.png",
+        "image_link": "",
+        "height": "fixed",
+        "height_desktop": 650,
+        "height_mobile": 250,
+        "subheading": "All Natural",
+        "title": "Scents From Nature",
+        "title_size": 40,
+        "heading_h1": false,
+        "text": "<p>Every scent that you smell in our soaps are directly from essential oils. Each essential oil is packed with unique benefits that are healthy for your body, hair and mind.<\/p><p>If you want to learn more about these benefits, a good place to start is <a href=\"\/blogs\/ingredients\/eucalyptus-essential-oil\" title=\"Eucalyptus Essential Oil\">Eucalyptus Essential Oil<\/a>!<\/p>",
+        "enlarge_text": true,
+        "button1_label": "",
+        "button1_link": "",
+        "button2_label": "",
+        "button2_link": "",
+        "button_style": "primary",
+        "text_alignment": "center left",
+        "full_width": true,
+        "mobile_overlay_under": false,
+        "image_overlay_style": "standard"
+      }
+    },
+    "3d9ff215-3ba9-4364-9ec6-4b86b6e070f1": {
+      "type": "featured-blog",
+      "disabled": true,
+      "settings": {
+        "title": "Our Ingredients",
+        "blog": "ingredients",
+        "crop_ratio": "1-1",
+        "show_author": false,
+        "show_view_all": true
+      }
+    },
+    "708af92d-cb49-4d13-81e9-2a14e5d5e41c": {
+      "type": "featured__blog",
+      "disabled": true,
+      "settings": {
+        "sectionTitle": ""
+      }
+    },
+    "50d1cd1a-aa70-428a-a2b2-bb46b394f0ab": {
+      "type": "featured__blog",
+      "blocks": {
+        "f59c132e-db8e-4fcc-96e4-368ddbc94743": {
+          "type": "article",
+          "settings": {
+            "article": "ingredients\/hemp-seed-oil-1"
+          }
+        },
+        "9a677b41-dea9-48d5-bdeb-50e2b7727a4e": {
+          "type": "article",
+          "settings": {
+            "article": "ingredients\/green-clay"
+          }
+        },
+        "2dcd1430-0c85-4b7e-beab-50b8d268884b": {
+          "type": "article",
+          "settings": {
+            "article": "ingredients\/lemon-juice"
+          }
+        },
+        "fed375ae-fa3c-4435-bbf4-1ecad04f74cb": {
+          "type": "article",
+          "settings": {
+            "article": "ingredients\/aloe-vera-juice"
+          }
+        },
+        "3b3a10a0-d134-4fa1-adea-f3c8b6ca9ecd": {
+          "type": "article",
+          "settings": {
+            "article": "ingredients\/coconut-oil"
+          }
+        }
+      },
+      "block_order": [
+        "f59c132e-db8e-4fcc-96e4-368ddbc94743",
+        "9a677b41-dea9-48d5-bdeb-50e2b7727a4e",
+        "2dcd1430-0c85-4b7e-beab-50b8d268884b",
+        "fed375ae-fa3c-4435-bbf4-1ecad04f74cb",
+        "3b3a10a0-d134-4fa1-adea-f3c8b6ca9ecd"
+      ],
+      "settings": {
+        "sectionTitle": "Our Ingredients"
+      }
+    }
+  },
+  "order": [
+    "main",
+    "dc4785f3-5c4a-4e83-a891-ea507b282914",
+    "ec7a095d-7078-4cf1-806a-13ab5bb3d807",
+    "7525f0d5-8274-45c9-9c76-02c324a332a7",
+    "d50bb865-c186-4926-bb29-944147723eb4",
+    "3d9ff215-3ba9-4364-9ec6-4b86b6e070f1",
+    "708af92d-cb49-4d13-81e9-2a14e5d5e41c",
+    "50d1cd1a-aa70-428a-a2b2-bb46b394f0ab"
+  ]
+}
